@@ -8,8 +8,32 @@ interface ASTNode {
     getColumn(): int
 }
 
-class Program
+class Program {
+    statements: List<Statement>
+}
+
+class Statement
+
+class Expression
+
+class Definition
+
+class VarDef
+
+class FuncDef
+
+class Type
 
 ASTNode <|.. Program
+ASTNode <|-- Statement
+ASTNode <|-- Expression
+ASTNode <|-- Definition
+Program o-- "0..n" Statement
+Program o-- "0..n" Definition
+Statement o.. Expression
+Definition <|.. VarDef
+Definition <|.. FuncDef
+FuncDef o-- "0..n" VarDef
+VarDef o-- "1..n" Type
 
 @enduml
