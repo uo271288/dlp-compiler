@@ -1,0 +1,27 @@
+@startuml Statements
+skinparam style strictuml
+skinparam monochrome true
+
+
+interface ASTNode {
+    getLine(): int
+    getColumn(): int
+}
+
+interface Statement
+
+class If {
+    condition: Expression
+    ifBody: List<Statement>
+    elseBody: List<Statement>
+}
+
+
+ASTNode <|-- Statement
+Statement <|.. If
+
+If o-- "1" Expression
+If o-- "0..n" Statement
+
+
+@enduml

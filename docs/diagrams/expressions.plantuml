@@ -1,0 +1,20 @@
+@startuml Expressions
+skinparam style strictuml
+skinparam monochrome true
+
+
+interface ASTNode {
+    getLine(): int
+    getColumn(): int
+}
+
+interface Expression
+
+class IntLiteral {
+    value: int
+}
+
+ASTNode <|-- Expression
+Expression <|.. IntLiteral
+
+@enduml

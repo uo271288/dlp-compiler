@@ -1,0 +1,18 @@
+@startuml Types
+skinparam style strictuml
+skinparam monochrome true
+
+interface ASTNode {
+    getLine(): int
+    getColumn(): int
+}
+
+interface Type
+
+ASTNode <|-- Type
+
+class IntType
+
+Type <|.. IntType
+
+@enduml
