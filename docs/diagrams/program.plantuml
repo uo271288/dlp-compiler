@@ -28,11 +28,11 @@ ASTNode <|.. Program
 ASTNode <|-- Statement
 ASTNode <|-- Expression
 ASTNode <|-- Definition
-Program o-- "0..n" Statement
 Program o-- "0..n" Definition
 Statement o.. Expression
 Definition <|.. VarDef
 Definition <|.. FuncDef
+FuncDef o-- "0..n" Statement
 FuncDef o-- "0..n" VarDef
 VarDef o-- "1..n" Type
 

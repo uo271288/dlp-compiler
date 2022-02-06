@@ -14,7 +14,18 @@ class IntLiteral {
     value: int
 }
 
+class RealLiteral {
+    value: double
+}
+
+class CharLiteral {
+    value: char
+}
+
 ASTNode <|-- Expression
 Expression <|.. IntLiteral
+Expression <|.. RealLiteral
+Expression <|.. CharLiteral
+
 
 @enduml
