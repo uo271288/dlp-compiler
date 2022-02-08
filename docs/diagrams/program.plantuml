@@ -18,9 +18,17 @@ class Expression
 
 class Definition
 
-class VarDef
+class VariableDefinition {
+    name: String
+    type: Type
+}
 
-class FuncDef
+class FunctionDefinition {
+    statements: List<Statement>
+    variableDefinitions: List<VariableDefinition>
+    name: String
+    type: FunctionType
+}
 
 class Type
 
@@ -30,10 +38,10 @@ ASTNode <|-- Expression
 ASTNode <|-- Definition
 Program o-- "0..n" Definition
 Statement o.. Expression
-Definition <|.. VarDef
-Definition <|.. FuncDef
-FuncDef o-- "0..n" Statement
-FuncDef o-- "0..n" VarDef
-VarDef o-- "1..n" Type
+Definition <|.. VariableDefinition
+Definition <|.. FunctionDefinition
+FunctionDefinition o-- "0..n" Statement
+FunctionDefinition o-- "0..n" VariableDefinition
+VariableDefinition o-- "1..n" Type
 
 @enduml

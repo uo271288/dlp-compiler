@@ -22,27 +22,55 @@ class CharLiteral {
     value: char
 }
 
-class UnaryMinus
+class UnaryMinus {
+    expression: Expression
+}
 
-class Variable
+class Variable{
+    name: String
+}
+
 class Arithmetic {
+    operand1: Expression
+    operand2: Expression
     operator: String
 }
 
 class Cast {
+    expression: Expression
     type: Type
 }
 
 class Comparison {
+    operand1: Expression
+    operand2: Expression
     operator: String
 }
 
-class Not
+class Not {
+    expression: Expression
+}
+
 class Logical {
+    operand1: Expression
+    operand2: Expression
     operator: String
 }
 
-class FunctionInvocation
+class FunctionInvocation {
+    var: Variable
+    args: List<Expression>
+}
+
+class ArrayAccess {
+    array: Expression
+    index: Expression
+}
+
+class FieldAccess {
+    expression: Expression
+    field: String
+}
 
 ASTNode <|-- Expression
 Expression <|.. IntLiteral
@@ -56,5 +84,7 @@ Expression <|.. Comparison
 Expression <|.. Not
 Expression <|.. Logical
 Expression <|.. FunctionInvocation
+Expression <|.. FieldAccess
+Expression <|.. ArrayAccess
 
 @enduml
