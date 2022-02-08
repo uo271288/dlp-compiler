@@ -9,10 +9,27 @@ interface ASTNode {
 
 interface Type
 
-ASTNode <|-- Type
-
 class IntType
 
+class RealType
+
+class CharType
+
+class ArrayType
+
+class VoidType
+
+class FunctionType
+
+class StructType
+
+ASTNode <|-- Type
 Type <|.. IntType
+Type <|.. RealType
+Type <|.. CharType
+Type <|.. ArrayType
+Type <|.. VoidType
+Type <|.. FunctionType
+Type <|.. StructType
 
 @enduml
