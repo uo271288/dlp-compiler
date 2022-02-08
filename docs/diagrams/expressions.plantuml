@@ -22,12 +22,9 @@ class CharLiteral {
     value: char
 }
 
-class UnaryMinus {
-}
+class UnaryMinus
 
-class Variable {
-}
-
+class Variable
 class Arithmetic {
     operator: String
 }
@@ -40,15 +37,12 @@ class Comparison {
     operator: String
 }
 
-class Not {
-}
-
+class Not
 class Logical {
     operator: String
 }
 
-class FunctionInvocation {
-}
+class FunctionInvocation
 
 ASTNode <|-- Expression
 Expression <|.. IntLiteral
