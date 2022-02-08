@@ -22,10 +22,45 @@ class CharLiteral {
     value: char
 }
 
+class UnaryMinus {
+}
+
+class Variable {
+}
+
+class Arithmetic {
+    operator: String
+}
+
+class Cast {
+    type: Type
+}
+
+class Comparison {
+    operator: String
+}
+
+class Not {
+}
+
+class Logical {
+    operator: String
+}
+
+class FunctionInvocation {
+}
+
 ASTNode <|-- Expression
 Expression <|.. IntLiteral
 Expression <|.. RealLiteral
 Expression <|.. CharLiteral
-
+Expression <|.. UnaryMinus
+Expression <|.. Variable
+Expression <|.. Arithmetic
+Expression <|.. Cast
+Expression <|.. Comparison
+Expression <|.. Not
+Expression <|.. Logical
+Expression <|.. FunctionInvocation
 
 @enduml

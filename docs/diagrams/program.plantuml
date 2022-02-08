@@ -9,7 +9,7 @@ interface ASTNode {
 }
 
 class Program {
-    statements: List<Statement>
+    definitions: List<Definition>
 }
 
 class Statement
