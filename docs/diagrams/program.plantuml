@@ -12,11 +12,11 @@ class Program {
     definitions: List<Definition>
 }
 
-class Statement
+interface Statement
 
-class Expression
+interface Expression
 
-class Definition
+interface Definition
 
 class VariableDefinition {
     name: String
@@ -30,7 +30,7 @@ class FunctionDefinition {
     type: FunctionType
 }
 
-class Type
+interface Type
 
 ASTNode <|.. Program
 ASTNode <|-- Statement
