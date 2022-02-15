@@ -11,6 +11,11 @@ public class LexerHelper {
     }
 
     public static double lexemeToReal(String lexeme) {
+        try {
+            return Double.parseDouble(lexeme);
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
         return -1;
     }
 
