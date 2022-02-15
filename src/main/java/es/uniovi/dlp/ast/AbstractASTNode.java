@@ -2,8 +2,8 @@ package es.uniovi.dlp.ast;
 
 public abstract class AbstractASTNode implements ASTNode {
 
-    private int line;
-    private int column;
+    private final int line;
+    private final int column;
 
     public AbstractASTNode(int line, int column) {
         this.line = line;
