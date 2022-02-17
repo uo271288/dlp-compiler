@@ -1,23 +1,22 @@
 grammar Xana;
 
-
 @header {
 package es.uniovi.dlp.parser;
 }
 
 program: program INT_CONSTANT
-        | INT_CONSTANT
-        ;
+        | INT_CONSTANT;
 
-INT_CONSTANT: [0-9]+
-        ;
+fragment
+NUM: [0-9];
+fragment
+DECIMAL: '.' NUM+
+        | NUM+ '.' NUM*;
 
-IDENT: [a-zA-Z_] [a-zA-Z0-9_]*
-        ;
+INT_CONSTANT: NUM+;
+IDENT: [a-zA-Z_] [a-zA-Z0-9_]* ;
+REAL_CONSTANT: DECIMAL | (DECIMAL | NUM+)[eE][+-]?NUM+;
 
-SIMPLE_COMMENT: '#' ~[\n\r]* -> skip
-        ;
-MULTILINE_COMMENT: '"""' .*? '"""' -> skip
-        ;
-WS: [ \n\t\r] -> skip
-        ;
+SIMPLE_COMMENT: '#' *? ('\n' | '\r' | EOF) -> skip;
+MULTILINE_COMMENT: '"""' .*? '"""' -> skip;
+WS: [ \n\t\r] -> skip;
