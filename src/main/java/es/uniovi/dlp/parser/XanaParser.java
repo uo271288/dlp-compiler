@@ -19,10 +19,10 @@ public class XanaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		INT_CONSTANT=1, ID=2, REAL_CONSTANT=3, SIMPLE_COMMENT=4, MULTILINE_COMMENT=5, 
-		WS=6, IDENT=7;
+		INT_CONSTANT=1, REAL_CONSTANT=2, ID=3, CHAR_CONSTANT=4, SIMPLE_COMMENT=5, 
+		MULTILINE_COMMENT=6, WS=7, IDENT=8;
 	public static final String[] tokenNames = {
-		"<INVALID>", "INT_CONSTANT", "ID", "REAL_CONSTANT", "SIMPLE_COMMENT", 
+		"<INVALID>", "INT_CONSTANT", "REAL_CONSTANT", "ID", "CHAR_CONSTANT", "SIMPLE_COMMENT", 
 		"MULTILINE_COMMENT", "WS", "IDENT"
 	};
 	public static final int
@@ -135,11 +135,11 @@ public class XanaParser extends Parser {
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t\21\4\2\t\2\4\3"+
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\n\21\4\2\t\2\4\3"+
 		"\t\3\3\2\7\2\b\n\2\f\2\16\2\13\13\2\3\2\3\2\3\3\3\3\3\3\2\2\4\2\4\2\3"+
-		"\5\2\3\3\5\5\t\t\17\2\t\3\2\2\2\4\16\3\2\2\2\6\b\5\4\3\2\7\6\3\2\2\2\b"+
-		"\13\3\2\2\2\t\7\3\2\2\2\t\n\3\2\2\2\n\f\3\2\2\2\13\t\3\2\2\2\f\r\7\2\2"+
-		"\3\r\3\3\2\2\2\16\17\t\2\2\2\17\5\3\2\2\2\3\t";
+		"\4\2\3\4\n\n\17\2\t\3\2\2\2\4\16\3\2\2\2\6\b\5\4\3\2\7\6\3\2\2\2\b\13"+
+		"\3\2\2\2\t\7\3\2\2\2\t\n\3\2\2\2\n\f\3\2\2\2\13\t\3\2\2\2\f\r\7\2\2\3"+
+		"\r\3\3\2\2\2\16\17\t\2\2\2\17\5\3\2\2\2\3\t";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
