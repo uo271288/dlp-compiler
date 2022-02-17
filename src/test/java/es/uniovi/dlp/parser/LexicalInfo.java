@@ -19,6 +19,7 @@ public record LexicalInfo(int line, int column, String lexeme, int tokenKey, Obj
         return switch (token.getType()) {
             case XanaLexer.INT_CONSTANT -> LexerHelper.lexemeToInt(token.getText());
             case XanaLexer.REAL_CONSTANT -> LexerHelper.lexemeToReal(token.getText());
+            case XanaLexer.CHAR_CONSTANT -> LexerHelper.lexemeToChar(token.getText());
             default -> token.getText();
         };
     }

@@ -39,16 +39,16 @@ public class LexerTest {
                 new LexicalInfo(17, 5, "var1", XanaLexer.ID, "var1"),
                 new LexicalInfo(17, 11, "_var_1", XanaLexer.ID, "_var_1"),
                 new LexicalInfo(17, 19, "VAR_1_AB_2", XanaLexer.ID, "VAR_1_AB_2")
-//                ,
-//
-//                new LexicalInfo(21, 5, "'a'", XanaLexer.CHAR_CONSTANT, 'a'),
-//                new LexicalInfo(21, 10, "'b'", XanaLexer.CHAR_CONSTANT, 'b'),
-//                new LexicalInfo(21, 15, "'.'", XanaLexer.CHAR_CONSTANT, '.'),
-//                new LexicalInfo(21, 20, "'-'", XanaLexer.CHAR_CONSTANT, '-'),
-//                new LexicalInfo(21, 25, "'~'", XanaLexer.CHAR_CONSTANT, '~'),
-//                new LexicalInfo(22, 5, "'\\n'", XanaLexer.CHAR_CONSTANT, '\n'),
-//                new LexicalInfo(22, 11, "'\\t'", XanaLexer.CHAR_CONSTANT, '\t'),
-//                new LexicalInfo(23, 5, "'\\126'", XanaLexer.CHAR_CONSTANT, '~')
+                ,
+
+                new LexicalInfo(21, 5, "'a'", XanaLexer.CHAR_CONSTANT, 'a'),
+                new LexicalInfo(21, 10, "'b'", XanaLexer.CHAR_CONSTANT, 'b'),
+                new LexicalInfo(21, 15, "'.'", XanaLexer.CHAR_CONSTANT, '.'),
+                new LexicalInfo(21, 20, "'-'", XanaLexer.CHAR_CONSTANT, '-'),
+                new LexicalInfo(21, 25, "'~'", XanaLexer.CHAR_CONSTANT, '~'),
+                new LexicalInfo(22, 5, "'\\n'", XanaLexer.CHAR_CONSTANT, '\n'),
+                new LexicalInfo(22, 11, "'\\t'", XanaLexer.CHAR_CONSTANT, '\t'),
+                new LexicalInfo(23, 5, "'\\126'", XanaLexer.CHAR_CONSTANT, '~')
         ));
     }
 

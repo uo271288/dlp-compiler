@@ -20,7 +20,7 @@ INT_CONSTANT: NUM+;
 REAL_CONSTANT: DECIMAL
         | (DECIMAL | NUM+)[eE][+-]?NUM+;
 ID: [a-zA-Z_] [a-zA-Z0-9_]* ;
-CHAR_CONSTANT: '\''.'\'' | '\'\\'(INT_CONSTANT | [ntr])'\'';
+CHAR_CONSTANT: '\''.'\'' | '\'\\'(NUM+ | [ntr])'\'';
 
 SIMPLE_COMMENT: '#' .*? ('\n' | '\r' | EOF) -> skip;
 MULTILINE_COMMENT: '"""' .*? '"""' -> skip;

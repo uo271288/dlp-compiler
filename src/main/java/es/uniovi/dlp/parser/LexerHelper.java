@@ -20,6 +20,18 @@ public class LexerHelper {
     }
 
     public static char lexemeToChar(String lexeme) {
-        return Character.MIN_VALUE;
+        if(lexeme.charAt(1)=='\\'){
+            switch (lexeme.charAt(2)) {
+                case 't':
+                    return '\t';
+                case 'r':
+                    return '\r';
+                case 'n':
+                    return '\n';
+            }
+            return (char) Integer.parseInt(lexeme.substring(2,lexeme.length()-1));
+        }
+        else
+            return lexeme.charAt(1);
     }
 }
