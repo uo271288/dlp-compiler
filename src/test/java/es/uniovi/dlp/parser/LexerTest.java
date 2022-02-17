@@ -29,16 +29,17 @@ public class LexerTest {
                 new LexicalInfo(5, 7, "123", XanaLexer.INT_CONSTANT, 123),
                 new LexicalInfo(6, 5, "0", XanaLexer.INT_CONSTANT, 0),
                 new LexicalInfo(6, 7, "12", XanaLexer.INT_CONSTANT, 12)
+                ,
+                new LexicalInfo(12, 5, "12.3", XanaLexer.REAL_CONSTANT, 12.3),
+                new LexicalInfo(12, 11, "2.", XanaLexer.REAL_CONSTANT, 2.0),
+                new LexicalInfo(12, 15, ".34", XanaLexer.REAL_CONSTANT, 0.34),
+                new LexicalInfo(13, 5, "34.12E-3", XanaLexer.REAL_CONSTANT, 0.03412),
+                new LexicalInfo(13, 15, "3e3", XanaLexer.REAL_CONSTANT, 3000.0),
+
+                new LexicalInfo(17, 5, "var1", XanaLexer.ID, "var1"),
+                new LexicalInfo(17, 11, "_var_1", XanaLexer.ID, "_var_1"),
+                new LexicalInfo(17, 19, "VAR_1_AB_2", XanaLexer.ID, "VAR_1_AB_2")
 //                ,
-//                new LexicalInfo(12, 5, "12.3", XanaLexer.REAL_CONSTANT, 12.3),
-//                new LexicalInfo(12, 11, "2.", XanaLexer.REAL_CONSTANT, 2.0),
-//                new LexicalInfo(12, 15, ".34", XanaLexer.REAL_CONSTANT, 0.34),
-//                new LexicalInfo(13, 5, "34.12E-3", XanaLexer.REAL_CONSTANT, 0.03412),
-//                new LexicalInfo(13, 15, "3e3", XanaLexer.REAL_CONSTANT, 3000.0),
-//
-//                new LexicalInfo(17, 5, "var1", XanaLexer.ID, "var1"),
-//                new LexicalInfo(17, 11, "_var_1", XanaLexer.ID, "_var_1"),
-//                new LexicalInfo(17, 19, "VAR_1_AB_2", XanaLexer.ID, "VAR_1_AB_2"),
 //
 //                new LexicalInfo(21, 5, "'a'", XanaLexer.CHAR_CONSTANT, 'a'),
 //                new LexicalInfo(21, 10, "'b'", XanaLexer.CHAR_CONSTANT, 'b'),

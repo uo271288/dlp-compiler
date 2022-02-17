@@ -19,14 +19,16 @@ public class XanaParser extends Parser {
 	protected static final PredictionContextCache _sharedContextCache =
 		new PredictionContextCache();
 	public static final int
-		INT_CONSTANT=1, SIMPLE_COMMENT=2, MULTILINE_COMMENT=3, WS=4;
+		INT_CONSTANT=1, ID=2, REAL_CONSTANT=3, SIMPLE_COMMENT=4, MULTILINE_COMMENT=5, 
+		WS=6, IDENT=7;
 	public static final String[] tokenNames = {
-		"<INVALID>", "INT_CONSTANT", "SIMPLE_COMMENT", "MULTILINE_COMMENT", "WS"
+		"<INVALID>", "INT_CONSTANT", "ID", "REAL_CONSTANT", "SIMPLE_COMMENT", 
+		"MULTILINE_COMMENT", "WS", "IDENT"
 	};
 	public static final int
-		RULE_program = 0;
+		RULE_program = 0, RULE_expr = 1;
 	public static final String[] ruleNames = {
-		"program"
+		"program", "expr"
 	};
 
 	@Override
@@ -49,9 +51,12 @@ public class XanaParser extends Parser {
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
 	public static class ProgramContext extends ParserRuleContext {
-		public TerminalNode INT_CONSTANT() { return getToken(XanaParser.INT_CONSTANT, 0); }
-		public ProgramContext program() {
-			return getRuleContext(ProgramContext.class,0);
+		public List<ExprContext> expr() {
+			return getRuleContexts(ExprContext.class);
+		}
+		public TerminalNode EOF() { return getToken(XanaParser.EOF, 0); }
+		public ExprContext expr(int i) {
+			return getRuleContext(ExprContext.class,i);
 		}
 		public ProgramContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -60,45 +65,26 @@ public class XanaParser extends Parser {
 	}
 
 	public final ProgramContext program() throws RecognitionException {
-		return program(0);
-	}
-
-	private ProgramContext program(int _p) throws RecognitionException {
-		ParserRuleContext _parentctx = _ctx;
-		int _parentState = getState();
-		ProgramContext _localctx = new ProgramContext(_ctx, _parentState);
-		ProgramContext _prevctx = _localctx;
-		int _startState = 0;
-		enterRecursionRule(_localctx, 0, RULE_program, _p);
+		ProgramContext _localctx = new ProgramContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_program);
+		int _la;
 		try {
-			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			{
-			setState(3); match(INT_CONSTANT);
-			}
-			_ctx.stop = _input.LT(-1);
-			setState(9);
+			setState(7);
 			_errHandler.sync(this);
-			_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
-			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
-				if ( _alt==1 ) {
-					if ( _parseListeners!=null ) triggerExitRuleEvent();
-					_prevctx = _localctx;
-					{
-					{
-					_localctx = new ProgramContext(_parentctx, _parentState);
-					pushNewRecursionContext(_localctx, _startState, RULE_program);
-					setState(5);
-					if (!(precpred(_ctx, 2))) throw new FailedPredicateException(this, "precpred(_ctx, 2)");
-					setState(6); match(INT_CONSTANT);
-					}
-					} 
+			_la = _input.LA(1);
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT_CONSTANT) | (1L << REAL_CONSTANT) | (1L << IDENT))) != 0)) {
+				{
+				{
+				setState(4); expr();
 				}
-				setState(11);
+				}
+				setState(9);
 				_errHandler.sync(this);
-				_alt = getInterpreter().adaptivePredict(_input,0,_ctx);
+				_la = _input.LA(1);
 			}
+			setState(10); match(EOF);
 			}
 		}
 		catch (RecognitionException re) {
@@ -107,30 +93,53 @@ public class XanaParser extends Parser {
 			_errHandler.recover(this, re);
 		}
 		finally {
-			unrollRecursionContexts(_parentctx);
+			exitRule();
 		}
 		return _localctx;
 	}
 
-	public boolean sempred(RuleContext _localctx, int ruleIndex, int predIndex) {
-		switch (ruleIndex) {
-		case 0: return program_sempred((ProgramContext)_localctx, predIndex);
+	public static class ExprContext extends ParserRuleContext {
+		public TerminalNode INT_CONSTANT() { return getToken(XanaParser.INT_CONSTANT, 0); }
+		public TerminalNode REAL_CONSTANT() { return getToken(XanaParser.REAL_CONSTANT, 0); }
+		public TerminalNode IDENT() { return getToken(XanaParser.IDENT, 0); }
+		public ExprContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
 		}
-		return true;
+		@Override public int getRuleIndex() { return RULE_expr; }
 	}
-	private boolean program_sempred(ProgramContext _localctx, int predIndex) {
-		switch (predIndex) {
-		case 0: return precpred(_ctx, 2);
+
+	public final ExprContext expr() throws RecognitionException {
+		ExprContext _localctx = new ExprContext(_ctx, getState());
+		enterRule(_localctx, 2, RULE_expr);
+		int _la;
+		try {
+			enterOuterAlt(_localctx, 1);
+			{
+			setState(12);
+			_la = _input.LA(1);
+			if ( !((((_la) & ~0x3f) == 0 && ((1L << _la) & ((1L << INT_CONSTANT) | (1L << REAL_CONSTANT) | (1L << IDENT))) != 0)) ) {
+			_errHandler.recoverInline(this);
+			}
+			consume();
+			}
 		}
-		return true;
+		catch (RecognitionException re) {
+			_localctx.exception = re;
+			_errHandler.reportError(this, re);
+			_errHandler.recover(this, re);
+		}
+		finally {
+			exitRule();
+		}
+		return _localctx;
 	}
 
 	public static final String _serializedATN =
-		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\6\17\4\2\t\2\3\2"+
-		"\3\2\3\2\3\2\3\2\7\2\n\n\2\f\2\16\2\r\13\2\3\2\2\3\2\3\2\2\2\16\2\4\3"+
-		"\2\2\2\4\5\b\2\1\2\5\6\7\3\2\2\6\13\3\2\2\2\7\b\f\4\2\2\b\n\7\3\2\2\t"+
-		"\7\3\2\2\2\n\r\3\2\2\2\13\t\3\2\2\2\13\f\3\2\2\2\f\3\3\2\2\2\r\13\3\2"+
-		"\2\2\3\13";
+		"\3\u0430\ud6d1\u8206\uad2d\u4417\uaef1\u8d80\uaadd\3\t\21\4\2\t\2\4\3"+
+		"\t\3\3\2\7\2\b\n\2\f\2\16\2\13\13\2\3\2\3\2\3\3\3\3\3\3\2\2\4\2\4\2\3"+
+		"\5\2\3\3\5\5\t\t\17\2\t\3\2\2\2\4\16\3\2\2\2\6\b\5\4\3\2\7\6\3\2\2\2\b"+
+		"\13\3\2\2\2\t\7\3\2\2\2\t\n\3\2\2\2\n\f\3\2\2\2\13\t\3\2\2\2\f\r\7\2\2"+
+		"\3\r\3\3\2\2\2\16\17\t\2\2\2\17\5\3\2\2\2\3\t";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());
 	static {
