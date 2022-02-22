@@ -1,6 +1,7 @@
 package es.uniovi.dlp.parser;
 
 import org.antlr.v4.runtime.*;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
@@ -9,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.fail;
 
+@Disabled("As we implemented the Parser, this test is no longer valid")
 public class LexerTest {
 
     @Test
