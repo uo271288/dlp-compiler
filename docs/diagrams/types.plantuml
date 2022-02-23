@@ -26,7 +26,14 @@ class FunctionType {
     returnType: Type
 }
 
-class StructType
+class StructType {
+    fields: List<StructField>
+}
+
+class StructField {
+    name: String
+    type: Type
+}
 
 ASTNode <|-- Type
 Type <|.. IntType
@@ -36,5 +43,6 @@ Type <|.. ArrayType
 Type <|.. VoidType
 Type <|.. FunctionType
 Type <|.. StructType
+Type <|.. StructField
 
 @enduml
