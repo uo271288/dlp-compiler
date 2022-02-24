@@ -189,4 +189,10 @@ public class ParserTest {
     void testInsertSort() {
         parserForProgram("real_examples/insert_sort").program();
     }
+
+    // This test is mine
+    @Test
+    void testExampleAlex() {
+        parserForProgram("example_alex").program();
+    }
 }

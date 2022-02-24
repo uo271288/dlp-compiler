@@ -1,0 +1,73 @@
+
+# Variables
+i :: int
+j :: int
+variable_1, variable_2, variable_3 :: char
+
+"""
+Funcion vacia
+"""
+def vacia() :: void do
+end
+
+def suma(a :: int, b :: double) :: int do
+  real :: double
+  c1, c2 :: char
+
+  c1 = a as char
+  real = c1 as double + a as double + b
+
+  vacia() # Invocacion como sentencia
+
+  return c1 as int
+end
+
+
+# Funcion principal
+def main() do
+
+  # Struct
+  pair :: defstruct do
+    integer :: int
+    character :: char
+  end
+
+  # Array
+  vector :: [10 :: [10 :: int]]
+
+  i = 0
+  j = 0
+
+  while i < 10 do
+    while j<5 do
+      vector[i][j] = i + j
+      j = j + 1
+    end
+
+    i = i + 1
+  end
+
+  i = 0
+
+  if i > 0, do: puts 'a', else: puts 'b'
+
+  pair.character = '0'
+  pair.integer = 48
+
+  while pair.integer >= i do
+    if pair.integer == vector[0][0] || !pair.character as int || i % 2 == 0 do
+      puts 't', 'r', 'u', 'e', '\n'
+    else
+      puts 'f', 'a', 'l', 's', 'e', '\n'
+    end
+    i = i + 1
+  end
+
+  puts suma(i, i as double) # Invocacion como expresion
+
+  vector[9][4.3 as int] = 5
+
+  suma(1, 2.2) # Invocacion como sentencia
+end
+
+
