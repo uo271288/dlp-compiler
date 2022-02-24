@@ -11,8 +11,10 @@ public class FunctionType extends AbstractType {
     private List<VariableDefinition> params;
     private Type returnType;
 
-    public FunctionType(int line, int column) {
+    public FunctionType(List<VariableDefinition> params, Type returnType, int line, int column) {
 
         super(line, column);
+        this.params = params;
+        this.returnType = returnType;
     }
 }

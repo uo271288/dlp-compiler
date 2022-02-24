@@ -6,7 +6,9 @@ public class StructType extends AbstractType {
 
     private List<StructField> fields;
 
-    public StructType(int line, int column) {
+    public StructType(List<StructField> fields, int line, int column) {
+
         super(line, column);
+        this.fields = fields;
     }
 }
