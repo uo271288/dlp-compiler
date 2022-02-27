@@ -27,7 +27,7 @@ returnType: 'void' | simpleType;
 
 mainFunc: 'def' 'main' '(' ')' 'do' (varDef | statement)* 'end';
 
-statement: 'if' expr ',' 'do' ':' statement ',' 'else' ':' statement
+statement: 'if' expr ',' 'do' ':' statement ',' 'else' ':' statement // One-line if statement is optional
         | 'if' expr 'do' statement* ('else' statement*)? 'end'
         | 'puts' exprs
         | 'in' exprs

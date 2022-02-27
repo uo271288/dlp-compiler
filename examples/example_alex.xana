@@ -49,6 +49,7 @@ def main() do
 
   i = 0
 
+  # One-line if
   if i > 0, do: puts 'a', else: puts 'b'
 
   pair.character = '0'
