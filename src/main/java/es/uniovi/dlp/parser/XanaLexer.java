@@ -1,6 +1,11 @@
 // Generated from Xana.g4 by ANTLR 4.9.3
 
 package es.uniovi.dlp.parser;
+import es.uniovi.dlp.ast.*;
+import es.uniovi.dlp.ast.definitions.*;
+import es.uniovi.dlp.ast.types.*;
+import es.uniovi.dlp.ast.statements.*;
+import es.uniovi.dlp.ast.expressions.*;
 
 import org.antlr.v4.runtime.Lexer;
 import org.antlr.v4.runtime.CharStream;
