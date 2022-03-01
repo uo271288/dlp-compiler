@@ -28,6 +28,13 @@
     </dependencies>
   </dependencyManagement>
 
+  <repositories>
+    <repository>
+      <id>local-repo</id>
+      <url>file://${basedir}/lib</url>
+    </repository>
+  </repositories>
+
   <dependencies>
     <dependency>
       <groupId>org.junit.jupiter</groupId>
@@ -38,6 +45,11 @@
       <groupId>org.antlr</groupId>
       <artifactId>antlr4</artifactId>
       <version>4.9.3</version>
+    </dependency>
+    <dependency>
+      <groupId>introspector</groupId>
+      <artifactId>introspector</artifactId>
+      <version>1.0</version>
     </dependency>
   </dependencies>
 
