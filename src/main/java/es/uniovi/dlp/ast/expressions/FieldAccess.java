@@ -4,8 +4,8 @@ import es.uniovi.dlp.ast.Expression;
 
 public class FieldAccess extends AbstractExpression {
 
-    private final Expression expression;
-    private final String field;
+    private  Expression expression;
+    private  String field;
 
 
     public FieldAccess(Expression expression, String field, int line, int column) {

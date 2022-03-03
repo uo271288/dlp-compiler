@@ -8,8 +8,8 @@ import java.util.List;
 
 public class While extends AbstractASTNode implements Statement {
 
-    private final Expression condition;
-    private final List<Statement> body;
+    private  Expression condition;
+    private  List<Statement> body;
 
     public While(Expression condition, List<Statement> body, int line, int column) {
 

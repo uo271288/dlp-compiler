@@ -5,8 +5,8 @@ import es.uniovi.dlp.ast.Type;
 
 public class Cast extends AbstractExpression {
 
-    private final Expression expression;
-    private final Type castType;
+    private Expression expression;
+    private Type castType;
 
     public Cast(Expression expression, Type castType, int line, int column) {
         super(line, column);

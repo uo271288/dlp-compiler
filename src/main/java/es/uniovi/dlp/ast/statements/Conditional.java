@@ -8,9 +8,9 @@ import java.util.List;
 
 public class Conditional extends AbstractASTNode implements Statement {
 
-    private final Expression condition;
-    private final List<Statement> ifBody;
-    private final List<Statement> elseBody;
+    private  Expression condition;
+    private  List<Statement> ifBody;
+    private  List<Statement> elseBody;
 
     public Conditional(Expression condition, List<Statement> ifBody, List<Statement> elseBody, int line, int column) {
 

@@ -6,7 +6,7 @@ import es.uniovi.dlp.ast.Statement;
 
 public class Puts extends AbstractASTNode implements Statement {
 
-    private final Expression expression;
+    private  Expression expression;
 
 
     public Puts(Expression expression, int line, int column) {

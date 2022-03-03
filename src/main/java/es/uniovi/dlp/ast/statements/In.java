@@ -6,7 +6,7 @@ import es.uniovi.dlp.ast.Statement;
 
 public class In extends AbstractASTNode implements Statement {
 
-    private final Expression expression;
+    private  Expression expression;
 
     public In(Expression expression, int line, int column) {
 

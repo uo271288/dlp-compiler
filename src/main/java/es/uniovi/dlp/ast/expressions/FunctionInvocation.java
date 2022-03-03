@@ -6,8 +6,8 @@ import java.util.List;
 
 public class FunctionInvocation extends AbstractExpression {
 
-    private final String name;
-    private final List<Expression> args;
+    private  String name;
+    private  List<Expression> args;
 
 
     public FunctionInvocation(String name, List<Expression> args, int line, int column) {

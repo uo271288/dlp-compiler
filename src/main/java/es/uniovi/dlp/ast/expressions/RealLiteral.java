@@ -2,7 +2,7 @@ package es.uniovi.dlp.ast.expressions;
 
 public class RealLiteral extends AbstractExpression {
 
-    private final double value;
+    private  double value;
 
     public RealLiteral(double value, int line, int column) {
         super(line, column);
