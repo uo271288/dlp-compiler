@@ -6,7 +6,7 @@ import es.uniovi.dlp.ast.Statement;
 
 import java.util.List;
 
-public class Conditional extends AbstractASTNode implements Statement {
+public class Conditional extends AbstractStatement {
 
     private  Expression condition;
     private  List<Statement> ifBody;

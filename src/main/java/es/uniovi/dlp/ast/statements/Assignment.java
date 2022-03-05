@@ -4,7 +4,7 @@ import es.uniovi.dlp.ast.AbstractASTNode;
 import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Statement;
 
-public class Assignment extends AbstractASTNode implements Statement {
+public class Assignment extends AbstractStatement {
 
     private  Expression leftExpr;
     private  Expression rightExpr;

@@ -13,4 +13,9 @@ public class ArrayType extends AbstractType {
         this.size = size;
         this.type = type;
     }
+
+    @Override
+    public String getTypeExpression() {
+        return "[" + size + "::" + type + "]";
+    }
 }

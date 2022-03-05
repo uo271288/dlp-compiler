@@ -7,4 +7,9 @@ public class RealType extends AbstractType {
 
         super(line, column);
     }
+
+    @Override
+    public String getTypeExpression() {
+        return "double";
+    }
 }

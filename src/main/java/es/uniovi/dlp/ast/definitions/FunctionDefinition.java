@@ -7,13 +7,12 @@ import java.util.List;
 
 public class FunctionDefinition extends AbstractDefinition {
 
-    private List<Statement> params;
     private List<Statement> statements;
-    private List<VariableDefinition> variableDefinitions;
+    private List<VariableDefinition> localVars;
 
-    public FunctionDefinition(List<Statement> statements, List<VariableDefinition> variableDefinitions, Type type, String name, int line, int column) {
+    public FunctionDefinition(List<Statement> statements, List<VariableDefinition> localVars, Type type, String name, int line, int column) {
         super(type, name, line, column);
         this.statements = statements;
-        this.variableDefinitions = variableDefinitions;
+        this.localVars = localVars;
     }
 }

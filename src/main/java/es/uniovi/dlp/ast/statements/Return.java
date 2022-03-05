@@ -4,7 +4,7 @@ import es.uniovi.dlp.ast.AbstractASTNode;
 import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Statement;
 
-public class Return extends AbstractASTNode implements Statement {
+public class Return extends AbstractStatement {
 
     private  Expression expression;
 

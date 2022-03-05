@@ -6,4 +6,9 @@ public class VoidType extends AbstractType {
 
         super(line, column);
     }
+
+    @Override
+    public String getTypeExpression() {
+        return "void";
+    }
 }

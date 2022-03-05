@@ -8,4 +8,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     public AbstractType(int line, int column) {
         super(line, column);
     }
+
+    public abstract String getTypeExpression();
+
+    @Override
+    public String toString() {
+        return getTypeExpression();
+    }
 }

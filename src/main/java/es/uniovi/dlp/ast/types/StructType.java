@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class StructType extends AbstractType {
@@ -10,5 +11,12 @@ public class StructType extends AbstractType {
 
         super(line, column);
         this.fields = fields;
+    }
+
+    @Override
+    public String getTypeExpression() {
+        List<String> list = new ArrayList<>();
+        fields.forEach(field -> list.add(field.toString()));
+        return "fields{"+String.join(", ", list)+"}";
     }
 }

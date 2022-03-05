@@ -6,10 +6,10 @@ import es.uniovi.dlp.ast.Statement;
 
 import java.util.List;
 
-public class While extends AbstractASTNode implements Statement {
+public class While extends AbstractStatement {
 
-    private  Expression condition;
-    private  List<Statement> body;
+    private Expression condition;
+    private List<Statement> body;
 
     public While(Expression condition, List<Statement> body, int line, int column) {
 

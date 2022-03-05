@@ -6,4 +6,11 @@ public class IntType extends AbstractType {
 
         super(line, column);
     }
+
+    @Override
+    public String getTypeExpression() {
+        return "int";
+    }
+
+
 }
