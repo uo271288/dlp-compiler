@@ -80,7 +80,7 @@ funcDef returns [FunctionDefinition ast]
             }
             List<Statement> sts = new ArrayList<Statement>();
             for(var s : $stmts) {
-                sts.add(s.ast);
+                sts.addAll(s.astList);
             }
             $ast = new FunctionDefinition(sts, defs, type, $ID.text, $start.getLine(), $start.getCharPositionInLine() + 1);
         }
@@ -113,62 +113,62 @@ mainFunc returns [FunctionDefinition ast]
                     }
                     List<Statement> sts = new ArrayList<Statement>();
                     for(var s : $stmts) {
-                        sts.add(s.ast);
+                        sts.addAll(s.astList);
                     }
                     $ast = new FunctionDefinition(sts, defs, type, "main", $start.getLine(), $start.getCharPositionInLine() + 1);
                 }
         ;
 
-statement returns[Statement ast] locals[List<Expression> list = new ArrayList<Expression>()]
+statement returns[List<Statement> astList = new ArrayList<>()] locals[List<Expression> list = new ArrayList<Expression>()]
           // One-line if statement is optional
         : 'if' cond=expr ',' 'do' ':' ifBody+=statement ',' 'else' ':' elseBody+=statement
         {
             List<Statement> ifBodyAux = new ArrayList<Statement>();
             for(var s : $ifBody) {
-                ifBodyAux.add(s.ast);
+                ifBodyAux.addAll(s.astList);
             }
             List<Statement> elseBodyAux = new ArrayList<Statement>();
             for(var s : $elseBody) {
-                elseBodyAux.add(s.ast);
+                elseBodyAux.addAll(s.astList);
             }
-            $ast = new Conditional($cond.ast, ifBodyAux, elseBodyAux, $start.getLine(), $start.getCharPositionInLine()+1);
+            $astList.add(new Conditional($cond.ast, ifBodyAux, elseBodyAux, $start.getLine(), $start.getCharPositionInLine()+1));
         }
         | 'if' cond=expr 'do' ifBody+=statement* ('else' elseBody+=statement*)? 'end'
         {
             List<Statement> ifBodyAux = new ArrayList<Statement>();
             for(var s : $ifBody) {
-                ifBodyAux.add(s.ast);
+                ifBodyAux.addAll(s.astList);
             }
             List<Statement> elseBodyAux = new ArrayList<Statement>();
             for(var s : $elseBody) {
-                elseBodyAux.add(s.ast);
+                elseBodyAux.addAll(s.astList);
             }
-            $ast = new Conditional($cond.ast, ifBodyAux, elseBodyAux, $start.getLine(), $start.getCharPositionInLine()+1);
+            $astList.add(new Conditional($cond.ast, ifBodyAux, elseBodyAux, $start.getLine(), $start.getCharPositionInLine()+1));
         }
         | 'puts' exprs {
                 $list.addAll($exprs.astList);
                 for(var e : $list){
-                    $ast = new Puts(e, $start.getLine(), $start.getCharPositionInLine()+1);
+                    $astList.add(new Puts(e, $start.getLine(), $start.getCharPositionInLine()+1));
                 }
             }
         | 'in' exprs {
                 $list.addAll($exprs.astList);
                 for(var e : $list){
-                    $ast = new In(e, $start.getLine(), $start.getCharPositionInLine()+1);
+                    $astList.add(new In(e, $start.getLine(), $start.getCharPositionInLine()+1));
                 }
             }
         | 'while' expr 'do' stmts+=statement* 'end'
         {
             List<Statement> stmtsAux = new ArrayList<Statement>();
             for(var s : $stmts) {
-                stmtsAux.add(s.ast);
+                stmtsAux.addAll(s.astList);
             }
-            $ast = new While($expr.ast, stmtsAux, $start.getLine(), $start.getCharPositionInLine()+1);
+            $astList.add(new While($expr.ast, stmtsAux, $start.getLine(), $start.getCharPositionInLine()+1));
         }
-        | 'return' expr {$ast = new Return($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | leftExpr=expr '=' rightExpr=expr {$ast = new Assignment($leftExpr.ast, $rightExpr.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
+        | 'return' expr {$astList.add(new Return($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
+        | leftExpr=expr '=' rightExpr=expr {$astList.add(new Assignment($leftExpr.ast, $rightExpr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
         | ID '(' (exprs {$list.addAll($exprs.astList);})? ')' {
-                      $ast = new FunctionInvocation($ID.text, $list, $start.getLine(), $start.getCharPositionInLine()+1);
+                      $astList.add(new FunctionInvocation($ID.text, $list, $start.getLine(), $start.getCharPositionInLine()+1));
                       }
         ;
 
