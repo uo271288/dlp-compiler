@@ -35,7 +35,7 @@ class Return {
 
 class Assignment {
     leftExp: Expression
-
+    rightExp: Expression
 }
 
 ASTNode <|-- Statement

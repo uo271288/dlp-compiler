@@ -17,6 +17,7 @@ class CharType
 
 class ArrayType {
     size: int
+    type: Type
 }
 
 class VoidType

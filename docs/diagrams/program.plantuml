@@ -19,15 +19,11 @@ interface Expression
 interface Definition
 
 class VariableDefinition {
-    name: String
-    type: Type
 }
 
 class FunctionDefinition {
     statements: List<Statement>
     variableDefinitions: List<VariableDefinition>
-    name: String
-    type: FunctionType
 }
 
 interface Type
