@@ -21,11 +21,10 @@ public class ErrorManager {
     }
 
     public List<Error> getErrors() {
-        errors.add(new Error(4, 5, ErrorReason.FIELD_ALREADY_DECLARED));
         return errors;
     }
 
     public boolean hasErrors() {
-        return errors.isEmpty();
+        return !errors.isEmpty();
     }
 }
