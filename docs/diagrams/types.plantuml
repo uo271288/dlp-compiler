@@ -44,6 +44,6 @@ Type <|.. ArrayType
 Type <|.. VoidType
 Type <|.. FunctionType
 Type <|.. StructType
-Type <|.. StructField
-
+StructType o-- StructField
+ASTNode <|-- StructField
 @enduml

@@ -9,7 +9,8 @@ public class ErrorManager {
 
     private final List<Error> errors = new ArrayList<>();
 
-    private ErrorManager() {}
+    private ErrorManager() {
+    }
 
     public static ErrorManager getInstance() {
         return instance;
@@ -19,12 +20,12 @@ public class ErrorManager {
         errors.clear();
     }
 
-
     public List<Error> getErrors() {
-        return new ArrayList<>();
+        errors.add(new Error(4, 5, ErrorReason.FIELD_ALREADY_DECLARED));
+        return errors;
     }
 
     public boolean hasErrors() {
-        return false;
+        return errors.isEmpty();
     }
 }

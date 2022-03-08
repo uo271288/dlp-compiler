@@ -38,6 +38,11 @@ class Assignment {
     rightExp: Expression
 }
 
+class FunctionInvocation {
+    var: Variable
+    args: List<Expression>
+}
+
 ASTNode <|-- Statement
 Statement <|.. Conditional
 Statement <|.. In
@@ -47,6 +52,6 @@ Statement <|.. Assignment
 Statement <|.. Puts
 Conditional o-- "0..n" Statement
 While o-- "0..n" Statement
-
+Statement <|.. FunctionInvocation
 
 @enduml
