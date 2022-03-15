@@ -9,4 +9,9 @@ public abstract class AbstractExpression extends AbstractASTNode implements Expr
     public AbstractExpression(int line, int column) {
         super(line, column);
     }
+
+    @Override
+    public boolean isLValue() {
+        return false;
+    }
 }

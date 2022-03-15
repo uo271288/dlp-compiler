@@ -1,8 +1,8 @@
 package es.uniovi.dlp.ast.statements;
 
-import es.uniovi.dlp.ast.AbstractASTNode;
 import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Statement;
+import es.uniovi.dlp.visitor.Visitor;
 
 import java.util.List;
 
@@ -18,5 +18,23 @@ public class Conditional extends AbstractStatement {
         this.condition = condition;
         this.ifBody = ifBody;
         this.elseBody = elseBody;
+    }
+
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
+    }
+
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Statement> getIfBody() {
+        return ifBody;
+    }
+
+    public List<Statement> getElseBody() {
+        return elseBody;
     }
 }

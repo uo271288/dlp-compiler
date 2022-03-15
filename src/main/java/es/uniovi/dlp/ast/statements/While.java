@@ -1,8 +1,8 @@
 package es.uniovi.dlp.ast.statements;
 
-import es.uniovi.dlp.ast.AbstractASTNode;
 import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Statement;
+import es.uniovi.dlp.visitor.Visitor;
 
 import java.util.List;
 
@@ -16,5 +16,19 @@ public class While extends AbstractStatement {
         super(line, column);
         this.condition = condition;
         this.body = body;
+    }
+
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
+    }
+
+    public Expression getCondition() {
+        return condition;
+    }
+
+    public List<Statement> getBody() {
+        return body;
     }
 }

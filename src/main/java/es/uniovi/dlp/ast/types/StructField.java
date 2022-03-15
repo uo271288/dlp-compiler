@@ -2,6 +2,7 @@ package es.uniovi.dlp.ast.types;
 
 import es.uniovi.dlp.ast.AbstractASTNode;
 import es.uniovi.dlp.ast.Type;
+import es.uniovi.dlp.visitor.Visitor;
 
 public class StructField extends AbstractASTNode {
 
@@ -21,5 +22,15 @@ public class StructField extends AbstractASTNode {
 
     public String getName() {
         return name;
+    }
+
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
+    }
+
+    public Type getType() {
+        return type;
     }
 }

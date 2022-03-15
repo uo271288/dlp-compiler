@@ -3,6 +3,7 @@ package es.uniovi.dlp.ast.types;
 import es.uniovi.dlp.error.Error;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
+import es.uniovi.dlp.visitor.Visitor;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -34,5 +35,15 @@ public class StructType extends AbstractType {
                 ErrorManager.getInstance().getErrors().add(new Error(repeated.getLine(), repeated.getColumn(),
                         ErrorReason.FIELD_ALREADY_DECLARED)));
 
+    }
+
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
+    }
+
+    public List<StructField> getFields() {
+        return fields;
     }
 }

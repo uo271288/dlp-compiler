@@ -1,6 +1,7 @@
 package es.uniovi.dlp.ast.types;
 
 import es.uniovi.dlp.ast.Type;
+import es.uniovi.dlp.visitor.Visitor;
 
 public class ArrayType extends AbstractType {
 
@@ -17,5 +18,15 @@ public class ArrayType extends AbstractType {
     @Override
     public String getTypeExpression() {
         return "[" + size + "::" + type + "]";
+    }
+
+
+    @Override
+    public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
+        return visitor.visit(this, param);
+    }
+
+    public Type getType() {
+        return type;
     }
 }
