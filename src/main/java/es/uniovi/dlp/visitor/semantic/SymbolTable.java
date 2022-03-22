@@ -1,6 +1,6 @@
 package es.uniovi.dlp.visitor.semantic;
 
-import es.uniovi.dlp.ast.definitions.Definition;
+import es.uniovi.dlp.ast.Definition;
 
 import java.util.*;
 

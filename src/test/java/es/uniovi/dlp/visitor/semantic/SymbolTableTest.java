@@ -1,6 +1,6 @@
 package es.uniovi.dlp.visitor.semantic;
 
-import es.uniovi.dlp.ast.definitions.VarDefinition;
+import es.uniovi.dlp.ast.definitions.VariableDefinition;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -10,8 +10,8 @@ public class SymbolTableTest {
     @Test
     void testInsert() {
         var st = new SymbolTable();
-        VarDefinition definition = new VarDefinition(0, 0, "a", null);
-        VarDefinition definition2 = new VarDefinition(0, 0, "a", null);
+        VariableDefinition definition = new VariableDefinition(0, 0, "a", null);
+        VariableDefinition definition2 = new VariableDefinition(0, 0, "a", null);
 
         assertTrue(st.insert(definition));
         assertEquals(definition.getScope(), 0);
@@ -31,8 +31,8 @@ public class SymbolTableTest {
     @Test
     void testFind() {
         SymbolTable st = new SymbolTable();
-        VarDefinition definition = new VarDefinition(0, 0, "a", null);
-        VarDefinition definition2 = new VarDefinition(0, 0, "b", null);
+        VariableDefinition definition = new VariableDefinition(0, 0, "a", null);
+        VariableDefinition definition2 = new VariableDefinition(0, 0, "b", null);
 
         assertTrue(st.insert(definition));
         assertNotNull(st.find("a"));
@@ -54,8 +54,8 @@ public class SymbolTableTest {
     @Test
     void testFindInCurrentScope() {
         SymbolTable st = new SymbolTable();
-        VarDefinition definition = new VarDefinition(0, 0, "a", null);
-        VarDefinition definition2 = new VarDefinition(0, 0, "b", null);
+        VariableDefinition definition = new VariableDefinition(0, 0, "a", null);
+        VariableDefinition definition2 = new VariableDefinition(0, 0, "b", null);
 
         assertTrue(st.insert(definition));
         assertNotNull(st.findInCurrentScope("a"));
