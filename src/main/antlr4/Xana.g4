@@ -186,7 +186,9 @@ expr returns [Expression ast] locals[List<Expression> list = new ArrayList<Expre
         | REAL_CONSTANT {$ast = new RealLiteral(LexerHelper.lexemeToReal($REAL_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | CHAR_CONSTANT {$ast = new CharLiteral(LexerHelper.lexemeToChar($CHAR_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | ID {$ast = new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | ID '(' (exprs {$list.addAll($exprs.astList);})? ')' {
+        | ID '(' (exprs {$list.addAll($exprs.astList);})? ')'
+            // Maybe have to change $ID.text to new Variable
+            {
             $ast = new FunctionInvocation($ID.text, $list, $start.getLine(), $start.getCharPositionInLine()+1);
             }
         | '(' expr ')' {$ast = $expr.ast;}

@@ -18,8 +18,6 @@ public class StructType extends AbstractType {
 
         super(line, column);
         this.fields = fields;
-
-        checkRepeatedFields();
     }
 
     @Override
@@ -28,15 +26,6 @@ public class StructType extends AbstractType {
         fields.forEach(field -> list.add(field.toString()));
         return "fields{" + String.join(", ", list) + "}";
     }
-
-    private void checkRepeatedFields() {
-        Set<String> repeatedFields = new HashSet<>();
-        fields.stream().filter(field -> !repeatedFields.add(field.getName())).forEach(repeated ->
-                ErrorManager.getInstance().getErrors().add(new Error(repeated.getLine(), repeated.getColumn(),
-                        ErrorReason.FIELD_ALREADY_DECLARED)));
-
-    }
-
 
     @Override
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
