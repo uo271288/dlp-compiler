@@ -106,6 +106,7 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
     @Override
     public ReturnType visit(FunctionInvocation functionInvocation, ParamType param) {
         functionInvocation.getArgs().forEach(expression -> expression.accept(this, param));
+        functionInvocation.getVariable().accept(this, param);
         return null;
     }
 
