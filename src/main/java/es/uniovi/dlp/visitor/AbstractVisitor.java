@@ -17,13 +17,15 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
 
     @Override
     public ReturnType visit(FunctionDefinition funcDef, ParamType param) {
-        funcDef.getStatements().forEach(statement -> statement.accept(this, param));
+        funcDef.getType().accept(this, param);
         funcDef.getLocalVars().forEach(var -> var.accept(this, param));
+        funcDef.getStatements().forEach(statement -> statement.accept(this, param));
         return null;
     }
 
     @Override
     public ReturnType visit(VariableDefinition varDef, ParamType param) {
+        varDef.getType().accept(this, param);
         return null;
     }
 

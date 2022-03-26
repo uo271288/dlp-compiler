@@ -19,7 +19,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(StructType structType, Type param) {
         Set<String> repeatedFields = new HashSet<>();
         structType.getFields().stream().filter(field -> !repeatedFields.add(field.getName())).forEach(repeated ->
-                ErrorManager.getInstance().getErrors().add(new Error(repeated.getLine(), repeated.getColumn(),
+                ErrorManager.getInstance().addError(new Error(repeated.getLine(), repeated.getColumn(),
                         ErrorReason.FIELD_ALREADY_DECLARED)));
         return null;
     }

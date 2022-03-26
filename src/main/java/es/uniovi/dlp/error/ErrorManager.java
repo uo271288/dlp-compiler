@@ -24,6 +24,10 @@ public class ErrorManager {
         return errors;
     }
 
+    public void addError(Error error){
+        errors.add(error);
+    }
+
     public boolean hasErrors() {
         return !errors.isEmpty();
     }

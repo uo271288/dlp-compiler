@@ -8,12 +8,12 @@ import java.util.List;
 
 public class FunctionInvocation extends AbstractExpression implements Statement {
 
-    private  String name;
+    private  Variable variable;
     private  List<Expression> args;
 
-    public FunctionInvocation(String name, List<Expression> args, int line, int column) {
+    public FunctionInvocation(Variable variable, List<Expression> args, int line, int column) {
         super(line, column);
-        this.name = name;
+        this.variable = variable;
         this.args = args;
     }
 
@@ -25,5 +25,9 @@ public class FunctionInvocation extends AbstractExpression implements Statement 
 
     public List<Expression> getArgs() {
         return args;
+    }
+
+    public Variable getVariable() {
+        return variable;
     }
 }

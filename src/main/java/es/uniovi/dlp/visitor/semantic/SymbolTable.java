@@ -9,12 +9,12 @@ public class SymbolTable {
     private List<Map<String, Definition>> table = new ArrayList<>();
 
     public SymbolTable() {
-        set();
+        table.add(new HashMap<>());
     }
 
     public void set() {
         table.add(new HashMap<>());
-        scope = table.size() - 1;
+        scope++;
     }
 
     public void reset() {

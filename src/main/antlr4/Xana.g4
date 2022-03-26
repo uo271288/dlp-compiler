@@ -28,23 +28,23 @@ varDef returns [List<VariableDefinition> astList = new ArrayList<>()]
         : varIDs '::' type
         {
             for(var id : $varIDs.astList) {
-                $astList.add(new VariableDefinition($type.ast, id, $start.getLine(), $start.getCharPositionInLine() + 1));
+                $astList.add(new VariableDefinition($type.ast, id.getName(), id.getLine(), id.getColumn()));
             }
         }
         ;
 
-varIDs returns [List<String> astList = new ArrayList<>()]
+varIDs returns [List<VariableDefinition> astList = new ArrayList<>()]
         : ids+=ID (',' ids+=ID)*
         {
             for(var id : $ids){
-                $astList.add(id.getText());
+                $astList.add(new VariableDefinition(null, id.getText(), id.getLine(), id.getCharPositionInLine() + 1));
             }
         }
         ;
 
 type returns [Type ast]
         : simpleType {$ast = $simpleType.ast;}
-        | '[' INT_CONSTANT '::' type ']' {$ast = new ArrayType(LexerHelper.lexemeToInt($INT_CONSTANT.text), $type.ast, $start.getLine(), $start.getCharPositionInLine() + 1);}
+        | '[' INT_CONSTANT '::' type ']' {$ast = new ArrayType(LexerHelper.lexemeToInt($INT_CONSTANT.text), $type.ast, $INT_CONSTANT.getLine(), $INT_CONSTANT.getCharPositionInLine() + 1);}
         | 'defstruct do' rFields+=recordFields* 'end'
         {
             List<StructField> fields = new ArrayList<>();
@@ -59,7 +59,7 @@ recordFields returns [List<StructField> astList = new ArrayList<>()]
         : varIDs '::' type
         {
                 for(var id : $varIDs.astList) {
-                    $astList.add(new StructField(id, $type.ast, $start.getLine(), $start.getCharPositionInLine() + 1));
+                    $astList.add(new StructField(id.getName(), $type.ast, id.getLine(), id.getColumn()));
                 }
             }
         ;
@@ -148,13 +148,13 @@ statement returns[List<Statement> astList = new ArrayList<>()] locals[List<Expre
         | 'puts' exprs {
                 $list.addAll($exprs.astList);
                 for(var e : $list){
-                    $astList.add(new Puts(e, $start.getLine(), $start.getCharPositionInLine()+1));
+                    $astList.add(new Puts(e, e.getLine(), e.getColumn()));
                 }
             }
         | 'in' exprs {
                 $list.addAll($exprs.astList);
                 for(var e : $list){
-                    $astList.add(new In(e, $start.getLine(), $start.getCharPositionInLine()+1));
+                    $astList.add(new In(e, e.getLine(), e.getColumn()));
                 }
             }
         | 'while' expr 'do' stmts+=statement* 'end'
@@ -168,7 +168,7 @@ statement returns[List<Statement> astList = new ArrayList<>()] locals[List<Expre
         | 'return' expr {$astList.add(new Return($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
         | leftExpr=expr '=' rightExpr=expr {$astList.add(new Assignment($leftExpr.ast, $rightExpr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
         | ID '(' (exprs {$list.addAll($exprs.astList);})? ')' {
-                      $astList.add(new FunctionInvocation($ID.text, $list, $start.getLine(), $start.getCharPositionInLine()+1));
+                      $astList.add(new FunctionInvocation(new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1), $list, $start.getLine(), $start.getCharPositionInLine()+1));
                       }
         ;
 
@@ -186,11 +186,7 @@ expr returns [Expression ast] locals[List<Expression> list = new ArrayList<Expre
         | REAL_CONSTANT {$ast = new RealLiteral(LexerHelper.lexemeToReal($REAL_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | CHAR_CONSTANT {$ast = new CharLiteral(LexerHelper.lexemeToChar($CHAR_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | ID {$ast = new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | ID '(' (exprs {$list.addAll($exprs.astList);})? ')'
-            // Maybe have to change $ID.text to new Variable
-            {
-            $ast = new FunctionInvocation($ID.text, $list, $start.getLine(), $start.getCharPositionInLine()+1);
-            }
+        | ID '(' (exprs {$list.addAll($exprs.astList);})? ')'{$ast = new FunctionInvocation(new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1), $list, $start.getLine(), $start.getCharPositionInLine()+1);}
         | '(' expr ')' {$ast = $expr.ast;}
         | array=expr'[' index=expr ']' {$ast = new ArrayAccess($array.ast, $index.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
         | a=expr '.' ID {$ast = new FieldAccess($a.ast, $ID.text, $start.getLine(), $start.getCharPositionInLine()+1);}

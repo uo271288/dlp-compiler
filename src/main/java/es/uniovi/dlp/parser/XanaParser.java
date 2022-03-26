@@ -242,7 +242,7 @@ public class XanaParser extends Parser {
 			((VarDefContext)_localctx).type = type();
 
 			            for(var id : ((VarDefContext)_localctx).varIDs.astList) {
-			                _localctx.astList.add(new VariableDefinition(((VarDefContext)_localctx).type.ast, id, _localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1));
+			                _localctx.astList.add(new VariableDefinition(((VarDefContext)_localctx).type.ast, id.getName(), id.getLine(), id.getColumn()));
 			            }
 			        
 			}
@@ -259,7 +259,7 @@ public class XanaParser extends Parser {
 	}
 
 	public static class VarIDsContext extends ParserRuleContext {
-		public List<String> astList = new ArrayList<>();
+		public List<VariableDefinition> astList = new ArrayList<>();
 		public Token ID;
 		public List<Token> ids = new ArrayList<Token>();
 		public List<TerminalNode> ID() { return getTokens(XanaParser.ID); }
@@ -301,7 +301,7 @@ public class XanaParser extends Parser {
 			}
 
 			            for(var id : ((VarIDsContext)_localctx).ids){
-			                _localctx.astList.add(id.getText());
+			                _localctx.astList.add(new VariableDefinition(null, id.getText(), id.getLine(), id.getCharPositionInLine() + 1));
 			            }
 			        
 			}
@@ -374,7 +374,7 @@ public class XanaParser extends Parser {
 				((TypeContext)_localctx).type = type();
 				setState(66);
 				match(T__3);
-				((TypeContext)_localctx).ast =  new ArrayType(LexerHelper.lexemeToInt((((TypeContext)_localctx).INT_CONSTANT!=null?((TypeContext)_localctx).INT_CONSTANT.getText():null)), ((TypeContext)_localctx).type.ast, _localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
+				((TypeContext)_localctx).ast =  new ArrayType(LexerHelper.lexemeToInt((((TypeContext)_localctx).INT_CONSTANT!=null?((TypeContext)_localctx).INT_CONSTANT.getText():null)), ((TypeContext)_localctx).type.ast, ((TypeContext)_localctx).INT_CONSTANT.getLine(), ((TypeContext)_localctx).INT_CONSTANT.getCharPositionInLine() + 1);
 				}
 				break;
 			case T__4:
@@ -453,7 +453,7 @@ public class XanaParser extends Parser {
 			((RecordFieldsContext)_localctx).type = type();
 
 			                for(var id : ((RecordFieldsContext)_localctx).varIDs.astList) {
-			                    _localctx.astList.add(new StructField(id, ((RecordFieldsContext)_localctx).type.ast, _localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1));
+			                    _localctx.astList.add(new StructField(id.getName(), ((RecordFieldsContext)_localctx).type.ast, id.getLine(), id.getColumn()));
 			                }
 			            
 			}
@@ -1052,7 +1052,7 @@ public class XanaParser extends Parser {
 
 				                _localctx.list.addAll(((StatementContext)_localctx).exprs.astList);
 				                for(var e : _localctx.list){
-				                    _localctx.astList.add(new Puts(e, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
+				                    _localctx.astList.add(new Puts(e, e.getLine(), e.getColumn()));
 				                }
 				            
 				}
@@ -1067,7 +1067,7 @@ public class XanaParser extends Parser {
 
 				                _localctx.list.addAll(((StatementContext)_localctx).exprs.astList);
 				                for(var e : _localctx.list){
-				                    _localctx.astList.add(new In(e, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
+				                    _localctx.astList.add(new In(e, e.getLine(), e.getColumn()));
 				                }
 				            
 				}
@@ -1150,7 +1150,7 @@ public class XanaParser extends Parser {
 				setState(224);
 				match(T__11);
 
-				                      _localctx.astList.add(new FunctionInvocation((((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null), _localctx.list, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
+				                      _localctx.astList.add(new FunctionInvocation(new Variable((((StatementContext)_localctx).ID!=null?((StatementContext)_localctx).ID.getText():null), _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1), _localctx.list, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
 				                      
 				}
 				break;
@@ -1334,9 +1334,7 @@ public class XanaParser extends Parser {
 
 				setState(254);
 				match(T__11);
-
-				            ((ExprContext)_localctx).ast =  new FunctionInvocation((((ExprContext)_localctx).ID!=null?((ExprContext)_localctx).ID.getText():null), _localctx.list, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
-				            
+				((ExprContext)_localctx).ast =  new FunctionInvocation(new Variable((((ExprContext)_localctx).ID!=null?((ExprContext)_localctx).ID.getText():null), _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1), _localctx.list, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
 				}
 				break;
 			case 6:
