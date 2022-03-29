@@ -9,6 +9,7 @@ import es.uniovi.dlp.ast.types.StructType;
 import es.uniovi.dlp.error.Error;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
+import es.uniovi.dlp.error.Location;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 import java.util.HashSet;
@@ -23,7 +24,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
         structType.getFields().forEach(field -> field.accept(this, param));
         Set<String> repeatedFields = new HashSet<>();
         structType.getFields().stream().filter(field -> !repeatedFields.add(field.getName())).forEach(repeated ->
-                ErrorManager.getInstance().addError(new Error(repeated.getLine(), repeated.getColumn(),
+                ErrorManager.getInstance().addError(new Error(new Location(repeated.getLine(), repeated.getColumn()),
                         ErrorReason.FIELD_ALREADY_DECLARED)));
         return null;
     }
@@ -33,7 +34,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
         if (st.findInCurrentScope(varDef.getName()) == null)
             st.insert(varDef);
         else
-            ErrorManager.getInstance().addError(new Error(varDef.getLine(), varDef.getColumn(),
+            ErrorManager.getInstance().addError(new Error(new Location(varDef.getLine(), varDef.getColumn()),
                     ErrorReason.VARIABLE_ALREADY_DECLARED));
         varDef.getType().accept(this, param);
         return null;
@@ -44,7 +45,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
         if (st.find(funDef.getName()) == null)
             st.insert(funDef);
         else
-            ErrorManager.getInstance().addError(new Error(funDef.getLine(), funDef.getColumn(),
+            ErrorManager.getInstance().addError(new Error(new Location(funDef.getLine(), funDef.getColumn()),
                     ErrorReason.FUNCTION_ALREADY_DECLARED));
         st.set();
         funDef.getType().accept(this, param);
@@ -58,7 +59,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         var find = st.find(functionInvocation.getVariable().getName());
         if (find == null)
-            ErrorManager.getInstance().addError(new Error(functionInvocation.getLine(), functionInvocation.getColumn(),
+            ErrorManager.getInstance().addError(new Error(new Location(functionInvocation.getLine(), functionInvocation.getColumn()),
                     ErrorReason.FUNCTION_NOT_DECLARED));
         else {
             functionInvocation.getArgs().forEach(expression -> expression.accept(this, param));
@@ -72,7 +73,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Variable variable, Type param) {
         var find = st.find(variable.getName());
         if (find == null)
-            ErrorManager.getInstance().addError(new Error(variable.getLine(), variable.getColumn(),
+            ErrorManager.getInstance().addError(new Error(new Location(variable.getLine(), variable.getColumn()),
                     ErrorReason.VARIABLE_NOT_DECLARED));
         else
             variable.setDefinition(find);

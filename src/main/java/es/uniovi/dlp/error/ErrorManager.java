@@ -21,6 +21,8 @@ public class ErrorManager {
     }
 
     public List<Error> getErrors() {
+        var errors = new ArrayList<>(this.errors);
+        Collections.sort(errors);
         return errors;
     }
 

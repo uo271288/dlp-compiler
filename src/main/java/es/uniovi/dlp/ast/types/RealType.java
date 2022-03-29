@@ -20,4 +20,9 @@ public class RealType extends AbstractType {
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
         return visitor.visit(this, param);
     }
+
+    @Override
+    public boolean isArithmetic() {
+        return true;
+    }
 }

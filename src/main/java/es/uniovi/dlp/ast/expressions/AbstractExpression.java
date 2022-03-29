@@ -10,8 +10,20 @@ public abstract class AbstractExpression extends AbstractASTNode implements Expr
         super(line, column);
     }
 
+    private Type type;
+
     @Override
     public boolean isLValue() {
         return false;
+    }
+
+    @Override
+    public Type getType() {
+        return type;
+    }
+
+    @Override
+    public void setType(Type type) {
+        this.type = type;
     }
 }
