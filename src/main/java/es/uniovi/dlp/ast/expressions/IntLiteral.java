@@ -11,7 +11,6 @@ public class IntLiteral extends AbstractExpression {
     public IntLiteral(int value, int line, int column) {
         super(line, column);
         this.value = value;
-        setType(new IntType(line, column));
     }
 
 

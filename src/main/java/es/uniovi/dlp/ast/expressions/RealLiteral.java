@@ -10,7 +10,6 @@ public class RealLiteral extends AbstractExpression {
     public RealLiteral(double value, int line, int column) {
         super(line, column);
         this.value = value;
-        setType(new RealType(line, column));
     }
 
 

@@ -191,10 +191,10 @@ expr returns [Expression ast] locals[List<Expression> list = new ArrayList<Expre
         | array=expr'[' index=expr ']' {$ast = new ArrayAccess($array.ast, $index.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
         | a=expr '.' ID {$ast = new FieldAccess($a.ast, $ID.text, $start.getLine(), $start.getCharPositionInLine()+1);}
         | a=expr 'as' simpleType {$ast = new Cast($a.ast, $simpleType.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | '-' expr {$ast = new UnaryMinus($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
+        | '-' expr {$ast = new UnaryMinus($expr.ast, $expr.ast.getLine(), $expr.ast.getColumn());}
         | '!' expr {$ast = new Not($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
         | leftExpr=expr op=('*'|'/'|'%') rightExpr=expr {$ast = new Arithmetic($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | leftExpr=expr op=('+'|'-') rightExpr=expr {$ast = new Arithmetic($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
+        | leftExpr=expr op=('+'|'-') rightExpr=expr {$ast = new Arithmetic($leftExpr.ast, $rightExpr.ast, $op.text, $op.getLine(), $op.getCharPositionInLine()+1);}
         | leftExpr=expr op=('>' | '>=' | '<' | '<=' | '!=' | '==') rightExpr=expr {$ast = new Comparison($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
         | leftExpr=expr op='&&' rightExpr=expr {$ast = new Logical($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
         | leftExpr=expr op='||' rightExpr=expr {$ast = new Logical($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}

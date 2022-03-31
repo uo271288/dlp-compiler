@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types;
 
+import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.visitor.Visitor;
 
 public class IntType extends AbstractType {
@@ -22,5 +23,14 @@ public class IntType extends AbstractType {
     @Override
     public boolean isArithmetic() {
         return true;
+    }
+
+    @Override
+    public Type arithmetic(Type type) {
+        if (type instanceof CharType || type instanceof IntType)
+            return new IntType(type.getLine(), type.getColumn());
+        if (type instanceof RealType)
+            return new RealType(type.getLine(), type.getColumn());
+        return super.arithmetic(type);
     }
 }
