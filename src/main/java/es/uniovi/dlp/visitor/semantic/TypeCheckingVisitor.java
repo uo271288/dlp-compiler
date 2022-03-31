@@ -82,7 +82,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(While aWhile, Type param) {
         super.visit(aWhile, param);
-        if(!aWhile.getCondition().getType().isLogical())
+        if (aWhile.getCondition().getType() != null && !aWhile.getCondition().getType().isLogical())
             ErrorManager.getInstance().addError(new Error(new Location(aWhile.getLine(), aWhile.getColumn()), ErrorReason.NOT_LOGICAL));
         return null;
     }
@@ -90,7 +90,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(Conditional conditional, Type param) {
         super.visit(conditional, param);
-        if(!conditional.getCondition().getType().isLogical())
+        if (!conditional.getCondition().getType().isLogical())
             ErrorManager.getInstance().addError(new Error(new Location(conditional.getLine(), conditional.getColumn()), ErrorReason.NOT_LOGICAL));
         return null;
     }
@@ -132,14 +132,26 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         return null;
     }
 
-    //    @Override
-//    public Type visit(ArrayAccess arrayAccess, Type param) {
-//        super.visit(arrayAccess,param);
-//        arrayAccess.setType(arrayAccess.getArray().getType().indexing(arrayAccess.getIndex().getType()));
+    @Override
+    public Type visit(Comparison comparison, Type param) {
+        super.visit(comparison, param);
+        comparison.setType(comparison.getOperand1().getType().comparison(comparison.getOperand2().getType()));
+        if (comparison.getType() == null) {
+            ErrorManager.getInstance().addError(new Error(new Location(comparison.getLine(), comparison.getColumn()), ErrorReason.INVALID_COMPARISON));
+            return new ErrorType(comparison.getLine(), comparison.getColumn(), "Comparison error, operator: " + comparison.getOperator());
+        }
+        return null;
+    }
+
+    @Override
+    public Type visit(ArrayAccess arrayAccess, Type param) {
+        super.visit(arrayAccess, param);
+        arrayAccess.setType(arrayAccess.getArray().getType().indexing(arrayAccess.getIndex().getType()));
+        // TODO Not completed, just for Comparison test!!
 //        if (!arrayAccess.getIndex().getType().isIndexable())
 //            ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getLine(), arrayAccess.getColumn()), ErrorReason.INVALID_INDEX_EXPRESSION));
 //        if (!(arrayAccess.getArray().getType().indexing(param) == null))
 //            ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getLine(), arrayAccess.getColumn()), ErrorReason.INVALID_INDEXING));
-//        return null;
-//    }
+        return null;
+    }
 }

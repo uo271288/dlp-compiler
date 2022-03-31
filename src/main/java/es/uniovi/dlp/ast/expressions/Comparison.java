@@ -29,4 +29,8 @@ public class Comparison extends AbstractExpression {
     public Expression getOperand2() {
         return operand2;
     }
+
+    public String getOperator() {
+        return operator;
+    }
 }

@@ -43,4 +43,11 @@ public class IntType extends AbstractType {
     public Type logical(Type type) {
         return type instanceof IntType ? type : null;
     }
+
+    @Override
+    public Type comparison(Type leftType) {
+        if (leftType instanceof IntType || leftType instanceof CharType || leftType instanceof RealType)
+            return new IntType(getLine(), getColumn());
+        return null;
+    }
 }

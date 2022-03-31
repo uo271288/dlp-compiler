@@ -29,4 +29,9 @@ public class ArrayType extends AbstractType {
     public Type getType() {
         return type;
     }
+
+    @Override
+    public Type indexing(Type type) {
+        return type instanceof IntType ? this.type : super.indexing(type);
+    }
 }

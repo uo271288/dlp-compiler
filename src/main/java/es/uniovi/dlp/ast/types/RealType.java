@@ -35,4 +35,11 @@ public class RealType extends AbstractType {
             return new RealType(type.getLine(), type.getColumn());
         return super.arithmetic(type);
     }
+
+    @Override
+    public Type comparison(Type leftType) {
+        if (leftType instanceof IntType || leftType instanceof CharType || leftType instanceof RealType)
+            return new IntType(getLine(), getColumn());
+        return null;
+    }
 }
