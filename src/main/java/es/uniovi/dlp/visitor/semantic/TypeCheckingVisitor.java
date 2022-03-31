@@ -2,14 +2,8 @@ package es.uniovi.dlp.visitor.semantic;
 
 import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.ast.expressions.*;
-import es.uniovi.dlp.ast.statements.Assignment;
-import es.uniovi.dlp.ast.statements.Conditional;
-import es.uniovi.dlp.ast.statements.In;
-import es.uniovi.dlp.ast.statements.While;
-import es.uniovi.dlp.ast.types.CharType;
-import es.uniovi.dlp.ast.types.ErrorType;
-import es.uniovi.dlp.ast.types.IntType;
-import es.uniovi.dlp.ast.types.RealType;
+import es.uniovi.dlp.ast.statements.*;
+import es.uniovi.dlp.ast.types.*;
 import es.uniovi.dlp.error.Error;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.error.ErrorReason;
@@ -23,7 +17,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(assignment, param);
         if (!assignment.getLeftExpr().isLValue())
             ErrorManager.getInstance().addError(new Error(new Location(assignment.getLeftExpr().getLine(), assignment.getLeftExpr().getColumn()), ErrorReason.LVALUE_REQUIRED));
-        if(!assignment.getLeftExpr().getType().promotableTo(assignment.getRightExpr().getType())){
+        if (!assignment.getLeftExpr().getType().promotableTo(assignment.getRightExpr().getType())) {
             ErrorManager.getInstance().addError(new Error(new Location(assignment.getLeftExpr().getLine(), assignment.getLeftExpr().getColumn()), ErrorReason.INCOMPATIBLE_TYPES));
         }
         return null;
@@ -182,6 +176,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         if (fieldAccess.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(fieldAccess.getLine(), fieldAccess.getColumn()), ErrorReason.NO_SUCH_FIELD));
             return new ErrorType(fieldAccess.getLine(), fieldAccess.getColumn(), "No such field error, field name: " + fieldAccess.getField());
+        }
+        return null;
+    }
+
+    @Override
+    public Type visit(Return aReturn, Type param) {
+        super.visit(aReturn, param);
+        if (!aReturn.getExpression().getType().promotableTo(param)) {
+            ErrorManager.getInstance().addError(new Error(new Location(aReturn.getLine(), aReturn.getColumn()), ErrorReason.INVALID_RETURN_TYPE));
         }
         return null;
     }

@@ -165,7 +165,7 @@ statement returns[List<Statement> astList = new ArrayList<>()] locals[List<Expre
             }
             $astList.add(new While($expr.ast, stmtsAux, $expr.ast.getLine(), $expr.ast.getColumn()));
         }
-        | 'return' expr {$astList.add(new Return($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
+        | 'return' expr {$astList.add(new Return($expr.ast, $expr.ast.getLine(), $expr.ast.getColumn()));}
         | leftExpr=expr '=' rightExpr=expr {$astList.add(new Assignment($leftExpr.ast, $rightExpr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
         | ID '(' (exprs {$list.addAll($exprs.astList);})? ')' {
                       $astList.add(new FunctionInvocation(new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1), $list, $start.getLine(), $start.getCharPositionInLine()+1));

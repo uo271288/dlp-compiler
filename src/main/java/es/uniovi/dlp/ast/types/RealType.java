@@ -52,6 +52,8 @@ public class RealType extends AbstractType {
 
     @Override
     public boolean promotableTo(Type to) {
+        if(to instanceof FunctionType && ((FunctionType)to).getReturnType() instanceof CharType)
+            return true;
         if (to instanceof RealType || to instanceof IntType || to instanceof CharType)
             return true;
         return false;

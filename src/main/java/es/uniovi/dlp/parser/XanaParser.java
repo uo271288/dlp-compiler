@@ -1114,7 +1114,7 @@ public class XanaParser extends Parser {
 				match(T__21);
 				setState(209);
 				((StatementContext)_localctx).expr = expr(0);
-				_localctx.astList.add(new Return(((StatementContext)_localctx).expr.ast, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
+				_localctx.astList.add(new Return(((StatementContext)_localctx).expr.ast, ((StatementContext)_localctx).expr.ast.getLine(), ((StatementContext)_localctx).expr.ast.getColumn()));
 				}
 				break;
 			case 7:
