@@ -5,9 +5,9 @@ import es.uniovi.dlp.visitor.Visitor;
 
 public class Arithmetic extends AbstractExpression {
 
-    private  Expression operand1;
-    private  Expression operand2;
-    private  String operator;
+    private Expression operand1;
+    private Expression operand2;
+    private String operator;
 
     public Arithmetic(Expression operand1, Expression operand2, String operator, int line, int column) {
         super(line, column);
@@ -27,5 +27,9 @@ public class Arithmetic extends AbstractExpression {
 
     public Expression getOperand2() {
         return operand2;
+    }
+
+    public String getOperator() {
+        return operator;
     }
 }

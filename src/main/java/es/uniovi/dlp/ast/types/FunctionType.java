@@ -22,7 +22,7 @@ public class FunctionType extends AbstractType {
 
     @Override
     public String getTypeExpression() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
         params.forEach(param -> list.add(param.toString()));
         return "function(" + String.join(", ", list) + ")" + ":" + returnType;
     }
@@ -39,5 +39,10 @@ public class FunctionType extends AbstractType {
 
     public Type getReturnType() {
         return returnType;
+    }
+
+    @Override
+    public boolean isLogical() {
+        return returnType instanceof IntType ? true : false;
     }
 }

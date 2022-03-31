@@ -143,7 +143,7 @@ statement returns[List<Statement> astList = new ArrayList<>()] locals[List<Expre
             for(var s : $elseBody) {
                 elseBodyAux.addAll(s.astList);
             }
-            $astList.add(new Conditional($cond.ast, ifBodyAux, elseBodyAux, $start.getLine(), $start.getCharPositionInLine()+1));
+            $astList.add(new Conditional($cond.ast, ifBodyAux, elseBodyAux, $cond.ast.getLine(), $cond.ast.getColumn()));
         }
         | 'puts' exprs {
                 $list.addAll($exprs.astList);
@@ -163,7 +163,7 @@ statement returns[List<Statement> astList = new ArrayList<>()] locals[List<Expre
             for(var s : $stmts) {
                 stmtsAux.addAll(s.astList);
             }
-            $astList.add(new While($expr.ast, stmtsAux, $start.getLine(), $start.getCharPositionInLine()+1));
+            $astList.add(new While($expr.ast, stmtsAux, $expr.ast.getLine(), $expr.ast.getColumn()));
         }
         | 'return' expr {$astList.add(new Return($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
         | leftExpr=expr '=' rightExpr=expr {$astList.add(new Assignment($leftExpr.ast, $rightExpr.ast, $start.getLine(), $start.getCharPositionInLine()+1));}
@@ -192,12 +192,12 @@ expr returns [Expression ast] locals[List<Expression> list = new ArrayList<Expre
         | a=expr '.' ID {$ast = new FieldAccess($a.ast, $ID.text, $start.getLine(), $start.getCharPositionInLine()+1);}
         | a=expr 'as' simpleType {$ast = new Cast($a.ast, $simpleType.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
         | '-' expr {$ast = new UnaryMinus($expr.ast, $expr.ast.getLine(), $expr.ast.getColumn());}
-        | '!' expr {$ast = new Not($expr.ast, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | leftExpr=expr op=('*'|'/'|'%') rightExpr=expr {$ast = new Arithmetic($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
+        | '!' expr {$ast = new Not($expr.ast, $expr.ast.getLine(), $expr.ast.getColumn());}
+        | leftExpr=expr op=('*'|'/'|'%') rightExpr=expr {$ast = new Arithmetic($leftExpr.ast, $rightExpr.ast, $op.text, $op.getLine(), $op.getCharPositionInLine()+1);}
         | leftExpr=expr op=('+'|'-') rightExpr=expr {$ast = new Arithmetic($leftExpr.ast, $rightExpr.ast, $op.text, $op.getLine(), $op.getCharPositionInLine()+1);}
-        | leftExpr=expr op=('>' | '>=' | '<' | '<=' | '!=' | '==') rightExpr=expr {$ast = new Comparison($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | leftExpr=expr op='&&' rightExpr=expr {$ast = new Logical($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
-        | leftExpr=expr op='||' rightExpr=expr {$ast = new Logical($leftExpr.ast, $rightExpr.ast, $op.text, $start.getLine(), $start.getCharPositionInLine()+1);}
+        | leftExpr=expr op=('>' | '>=' | '<' | '<=' | '!=' | '==') rightExpr=expr {$ast = new Comparison($leftExpr.ast, $rightExpr.ast, $op.text, $op.getLine(), $op.getCharPositionInLine()+1);}
+        | leftExpr=expr op='&&' rightExpr=expr {$ast = new Logical($leftExpr.ast, $rightExpr.ast, $op.text, $op.getLine(), $op.getCharPositionInLine()+1);}
+        | leftExpr=expr op='||' rightExpr=expr {$ast = new Logical($leftExpr.ast, $rightExpr.ast, $op.text, $op.getLine(), $op.getCharPositionInLine()+1);}
         ;
 
 fragment

@@ -1038,7 +1038,7 @@ public class XanaParser extends Parser {
 				            for(var s : ((StatementContext)_localctx).elseBody) {
 				                elseBodyAux.addAll(s.astList);
 				            }
-				            _localctx.astList.add(new Conditional(((StatementContext)_localctx).cond.ast, ifBodyAux, elseBodyAux, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
+				            _localctx.astList.add(new Conditional(((StatementContext)_localctx).cond.ast, ifBodyAux, elseBodyAux, ((StatementContext)_localctx).cond.ast.getLine(), ((StatementContext)_localctx).cond.ast.getColumn()));
 				        
 				}
 				break;
@@ -1103,7 +1103,7 @@ public class XanaParser extends Parser {
 				            for(var s : ((StatementContext)_localctx).stmts) {
 				                stmtsAux.addAll(s.astList);
 				            }
-				            _localctx.astList.add(new While(((StatementContext)_localctx).expr.ast, stmtsAux, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1));
+				            _localctx.astList.add(new While(((StatementContext)_localctx).expr.ast, stmtsAux, ((StatementContext)_localctx).expr.ast.getLine(), ((StatementContext)_localctx).expr.ast.getColumn()));
 				        
 				}
 				break;
@@ -1363,7 +1363,7 @@ public class XanaParser extends Parser {
 				match(T__26);
 				setState(266);
 				((ExprContext)_localctx).expr = expr(6);
-				((ExprContext)_localctx).ast =  new Not(((ExprContext)_localctx).expr.ast, _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
+				((ExprContext)_localctx).ast =  new Not(((ExprContext)_localctx).expr.ast, ((ExprContext)_localctx).expr.ast.getLine(), ((ExprContext)_localctx).expr.ast.getColumn());
 				}
 				break;
 			}
@@ -1400,7 +1400,7 @@ public class XanaParser extends Parser {
 						}
 						setState(273);
 						((ExprContext)_localctx).rightExpr = ((ExprContext)_localctx).expr = expr(6);
-						((ExprContext)_localctx).ast =  new Arithmetic(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
+						((ExprContext)_localctx).ast =  new Arithmetic(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), ((ExprContext)_localctx).op.getLine(), ((ExprContext)_localctx).op.getCharPositionInLine()+1);
 						}
 						break;
 					case 2:
@@ -1448,7 +1448,7 @@ public class XanaParser extends Parser {
 						}
 						setState(283);
 						((ExprContext)_localctx).rightExpr = ((ExprContext)_localctx).expr = expr(4);
-						((ExprContext)_localctx).ast =  new Comparison(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
+						((ExprContext)_localctx).ast =  new Comparison(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), ((ExprContext)_localctx).op.getLine(), ((ExprContext)_localctx).op.getCharPositionInLine()+1);
 						}
 						break;
 					case 4:
@@ -1463,7 +1463,7 @@ public class XanaParser extends Parser {
 						((ExprContext)_localctx).op = match(T__37);
 						setState(288);
 						((ExprContext)_localctx).rightExpr = ((ExprContext)_localctx).expr = expr(3);
-						((ExprContext)_localctx).ast =  new Logical(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
+						((ExprContext)_localctx).ast =  new Logical(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), ((ExprContext)_localctx).op.getLine(), ((ExprContext)_localctx).op.getCharPositionInLine()+1);
 						}
 						break;
 					case 5:
@@ -1478,7 +1478,7 @@ public class XanaParser extends Parser {
 						((ExprContext)_localctx).op = match(T__38);
 						setState(293);
 						((ExprContext)_localctx).rightExpr = ((ExprContext)_localctx).expr = expr(2);
-						((ExprContext)_localctx).ast =  new Logical(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), _localctx.start.getLine(), _localctx.start.getCharPositionInLine()+1);
+						((ExprContext)_localctx).ast =  new Logical(((ExprContext)_localctx).leftExpr.ast, ((ExprContext)_localctx).rightExpr.ast, (((ExprContext)_localctx).op!=null?((ExprContext)_localctx).op.getText():null), ((ExprContext)_localctx).op.getLine(), ((ExprContext)_localctx).op.getCharPositionInLine()+1);
 						}
 						break;
 					case 6:

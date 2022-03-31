@@ -26,6 +26,11 @@ public class IntType extends AbstractType {
     }
 
     @Override
+    public boolean isLogical() {
+        return true;
+    }
+
+    @Override
     public Type arithmetic(Type type) {
         if (type instanceof CharType || type instanceof IntType)
             return new IntType(type.getLine(), type.getColumn());
