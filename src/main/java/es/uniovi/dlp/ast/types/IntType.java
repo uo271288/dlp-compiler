@@ -57,4 +57,11 @@ public class IntType extends AbstractType {
             return castType;
         return null;
     }
+
+    @Override
+    public boolean promotableTo(Type to) {
+        if (to instanceof IntType)
+            return true;
+        return false;
+    }
 }

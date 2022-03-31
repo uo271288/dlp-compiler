@@ -20,10 +20,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(Assignment assignment, Type param) {
-        assignment.getLeftExpr().accept(this, param);
+        super.visit(assignment, param);
         if (!assignment.getLeftExpr().isLValue())
             ErrorManager.getInstance().addError(new Error(new Location(assignment.getLeftExpr().getLine(), assignment.getLeftExpr().getColumn()), ErrorReason.LVALUE_REQUIRED));
-        assignment.getRightExpr().accept(this, param);
+        if(!assignment.getLeftExpr().getType().promotableTo(assignment.getRightExpr().getType())){
+            ErrorManager.getInstance().addError(new Error(new Location(assignment.getLeftExpr().getLine(), assignment.getLeftExpr().getColumn()), ErrorReason.INCOMPATIBLE_TYPES));
+        }
         return null;
     }
 

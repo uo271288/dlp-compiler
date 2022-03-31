@@ -47,4 +47,11 @@ public class CharType extends AbstractType {
             return castType;
         return null;
     }
+
+    @Override
+    public boolean promotableTo(Type to) {
+        if (to instanceof CharType)
+            return true;
+        return false;
+    }
 }
