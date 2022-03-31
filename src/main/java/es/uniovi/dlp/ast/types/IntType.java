@@ -38,4 +38,9 @@ public class IntType extends AbstractType {
             return new RealType(type.getLine(), type.getColumn());
         return super.arithmetic(type);
     }
+
+    @Override
+    public Type logical(Type type) {
+        return type instanceof IntType ? type : null;
+    }
 }
