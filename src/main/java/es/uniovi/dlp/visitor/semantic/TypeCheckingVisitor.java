@@ -147,11 +147,14 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(ArrayAccess arrayAccess, Type param) {
         super.visit(arrayAccess, param);
         arrayAccess.setType(arrayAccess.getArray().getType().indexing(arrayAccess.getIndex().getType()));
-        // TODO Not completed, just for Comparison test!!
-//        if (!arrayAccess.getIndex().getType().isIndexable())
-//            ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getLine(), arrayAccess.getColumn()), ErrorReason.INVALID_INDEX_EXPRESSION));
-//        if (!(arrayAccess.getArray().getType().indexing(param) == null))
-//            ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getLine(), arrayAccess.getColumn()), ErrorReason.INVALID_INDEXING));
+        if (!arrayAccess.getArray().getType().isIndexable()) {
+            ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getLine(), arrayAccess.getColumn()), ErrorReason.INVALID_INDEXING));
+            return new ErrorType(arrayAccess.getLine(), arrayAccess.getColumn(), "Invalid array error");
+        }
+        if (arrayAccess.getType() == null) {
+            ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn()), ErrorReason.INVALID_INDEX_EXPRESSION));
+            return new ErrorType(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn(), "Invalid index error");
+        }
         return null;
     }
 }

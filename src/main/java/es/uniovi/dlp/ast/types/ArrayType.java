@@ -34,4 +34,9 @@ public class ArrayType extends AbstractType {
     public Type indexing(Type type) {
         return type instanceof IntType ? this.type : super.indexing(type);
     }
+
+    @Override
+    public boolean isIndexable() {
+        return true;
+    }
 }
