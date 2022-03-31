@@ -28,4 +28,8 @@ public class FieldAccess extends AbstractExpression {
     public Expression getExpression() {
         return expression;
     }
+
+    public String getField() {
+        return field;
+    }
 }

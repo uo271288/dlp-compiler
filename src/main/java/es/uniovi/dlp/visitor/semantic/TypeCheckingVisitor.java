@@ -157,4 +157,22 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         }
         return null;
     }
+
+    @Override
+    public Type visit(Cast cast, Type param) {
+        super.visit(cast, param);
+        cast.setType(cast.getExpression().getType().cast(cast.getCastType()));
+        if(cast.getType()==null){
+            ErrorManager.getInstance().addError(new Error(new Location(cast.getLine(), cast.getColumn()), ErrorReason.INVALID_CAST));
+            return new ErrorType(cast.getLine(), cast.getColumn(), "Invalid cast error");
+        }
+        return null;
+    }
+
+    @Override
+    public Type visit(FieldAccess fieldAccess, Type param) {
+        super.visit(fieldAccess, param);
+        fieldAccess.setType(fieldAccess.getExpression().getType().dot(fieldAccess.getField()));
+        return null;
+    }
 }

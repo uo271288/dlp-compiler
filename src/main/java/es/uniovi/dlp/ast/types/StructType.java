@@ -1,14 +1,10 @@
 package es.uniovi.dlp.ast.types;
 
-import es.uniovi.dlp.error.Error;
-import es.uniovi.dlp.error.ErrorManager;
-import es.uniovi.dlp.error.ErrorReason;
+import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.visitor.Visitor;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class StructType extends AbstractType {
 
@@ -34,5 +30,13 @@ public class StructType extends AbstractType {
 
     public List<StructField> getFields() {
         return fields;
+    }
+
+    @Override
+    public Type dot(String fieldName) {
+        for (StructField field : fields)
+            if (field.getName().equals(fieldName))
+                return field.getType();
+        return null;
     }
 }

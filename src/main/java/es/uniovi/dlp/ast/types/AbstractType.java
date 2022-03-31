@@ -32,8 +32,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public Type dot(Type type) {
-        return type instanceof ErrorType?type:null;
+    public Type dot(String type) {
+        return null;
     }
 
     @Override

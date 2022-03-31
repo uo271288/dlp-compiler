@@ -42,4 +42,11 @@ public class RealType extends AbstractType {
             return new IntType(getLine(), getColumn());
         return null;
     }
+
+    @Override
+    public Type cast(Type castType) {
+        if (castType instanceof IntType || castType instanceof CharType || castType instanceof RealType)
+            return castType;
+        return null;
+    }
 }
