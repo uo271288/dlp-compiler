@@ -39,4 +39,9 @@ public class StructType extends AbstractType {
                 return field.getType();
         return null;
     }
+
+    @Override
+    public boolean allowDot() {
+        return true;
+    }
 }

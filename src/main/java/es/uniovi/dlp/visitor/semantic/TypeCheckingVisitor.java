@@ -162,7 +162,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(Cast cast, Type param) {
         super.visit(cast, param);
         cast.setType(cast.getExpression().getType().cast(cast.getCastType()));
-        if(cast.getType()==null){
+        if (cast.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(cast.getLine(), cast.getColumn()), ErrorReason.INVALID_CAST));
             return new ErrorType(cast.getLine(), cast.getColumn(), "Invalid cast error");
         }
@@ -172,7 +172,15 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(FieldAccess fieldAccess, Type param) {
         super.visit(fieldAccess, param);
+        if (!fieldAccess.getExpression().getType().allowDot()) {
+            ErrorManager.getInstance().addError(new Error(new Location(fieldAccess.getLine(), fieldAccess.getColumn()), ErrorReason.INVALID_DOT));
+            return new ErrorType(fieldAccess.getLine(), fieldAccess.getColumn(), "Invalid dot");
+        }
         fieldAccess.setType(fieldAccess.getExpression().getType().dot(fieldAccess.getField()));
+        if (fieldAccess.getType() == null) {
+            ErrorManager.getInstance().addError(new Error(new Location(fieldAccess.getLine(), fieldAccess.getColumn()), ErrorReason.NO_SUCH_FIELD));
+            return new ErrorType(fieldAccess.getLine(), fieldAccess.getColumn(), "No such field error, field name: " + fieldAccess.getField());
+        }
         return null;
     }
 }
