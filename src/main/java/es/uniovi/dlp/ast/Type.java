@@ -18,6 +18,6 @@ public interface Type extends ASTNode {
     boolean isArithmetic();
     boolean allowDot(String field);
     boolean isCast();
-    boolean isComparable();
     boolean hasDifferentArgs(List<Expression> args);
+    int getNumberOfBytes();
 }

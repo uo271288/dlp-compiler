@@ -20,4 +20,9 @@ public class ErrorType extends AbstractType {
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
         return null;
     }
+
+    @Override
+    public int getNumberOfBytes() {
+        return 0;
+    }
 }

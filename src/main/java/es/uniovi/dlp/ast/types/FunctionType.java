@@ -10,7 +10,6 @@ import java.util.List;
 
 public class FunctionType extends AbstractType {
 
-
     private List<VariableDefinition> params;
     private Type returnType;
 

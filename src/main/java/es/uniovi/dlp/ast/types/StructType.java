@@ -47,4 +47,12 @@ public class StructType extends AbstractType {
                 return true;
         return false;
     }
+
+    @Override
+    public int getNumberOfBytes() {
+        int offset = 0;
+        for (StructField field : fields)
+            offset += field.getType().getNumberOfBytes();
+        return offset;
+    }
 }

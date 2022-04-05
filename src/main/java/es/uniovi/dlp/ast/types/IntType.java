@@ -70,4 +70,9 @@ public class IntType extends AbstractType {
             return type;
         return super.assignment(type);
     }
+
+    @Override
+    public int getNumberOfBytes() {
+        return 2;
+    }
 }

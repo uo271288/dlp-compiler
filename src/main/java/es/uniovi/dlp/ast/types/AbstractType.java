@@ -55,7 +55,7 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public Type call(List<Expression> args){
+    public Type call(List<Expression> args) {
         return null;
     }
 
@@ -90,12 +90,12 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public boolean isComparable() {
+    public boolean hasDifferentArgs(List<Expression> args) {
         return false;
     }
 
     @Override
-    public boolean hasDifferentArgs(List<Expression> args){
-        return false;
+    public int getNumberOfBytes() {
+        return 0;
     }
 }

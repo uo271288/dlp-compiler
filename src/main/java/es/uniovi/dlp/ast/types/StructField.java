@@ -9,6 +9,8 @@ public class StructField extends AbstractASTNode {
     private String name;
     private Type type;
 
+    private int offset;
+
     public StructField(String name, Type type, int line, int column) {
         super(line, column);
         this.name = name;
@@ -32,5 +34,13 @@ public class StructField extends AbstractASTNode {
 
     public Type getType() {
         return type;
+    }
+
+    public int getOffset() {
+        return offset;
+    }
+
+    public void setOffset(int offset) {
+        this.offset = offset;
     }
 }

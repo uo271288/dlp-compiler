@@ -19,4 +19,9 @@ public class VoidType extends AbstractType {
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
         return visitor.visit(this, param);
     }
+
+    @Override
+    public int getNumberOfBytes() {
+        return 0;
+    }
 }
