@@ -4,6 +4,7 @@ import es.uniovi.dlp.ast.Program;
 import es.uniovi.dlp.error.ErrorManager;
 import es.uniovi.dlp.parser.XanaLexer;
 import es.uniovi.dlp.parser.XanaParser;
+import es.uniovi.dlp.visitor.codegeneration.OffsetVisitor;
 import es.uniovi.dlp.visitor.semantic.IdentificationVisitor;
 import es.uniovi.dlp.visitor.semantic.TypeCheckingVisitor;
 import org.antlr.v4.runtime.CharStream;
@@ -26,6 +27,7 @@ public class Compiler {
         program = parse(filename);
         assignScope();
         assignType();
+        assignOffset();
         checkErrors();
     }
 
@@ -61,6 +63,11 @@ public class Compiler {
     private void assignType() {
         TypeCheckingVisitor typeCheckingVisitor = new TypeCheckingVisitor();
         typeCheckingVisitor.visit(program, null);
+    }
+
+    private void assignOffset() {
+        OffsetVisitor offsetVisitor = new OffsetVisitor();
+        offsetVisitor.visit(program, null);
     }
 
     public void setReportErrors(boolean reportErrors) {
