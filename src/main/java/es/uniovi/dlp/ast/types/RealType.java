@@ -29,33 +29,37 @@ public class RealType extends AbstractType {
 
     @Override
     public Type arithmetic(Type type) {
-        if (type instanceof CharType || type instanceof IntType)
-            return new IntType(type.getLine(), type.getColumn());
-        if (type instanceof RealType)
-            return new RealType(type.getLine(), type.getColumn());
+        if (type instanceof RealType || type instanceof IntType)
+            return type;
         return super.arithmetic(type);
     }
 
     @Override
-    public Type comparison(Type leftType) {
-        if (leftType instanceof IntType || leftType instanceof CharType || leftType instanceof RealType)
+    public Type comparison(Type type) {
+        if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
             return new IntType(getLine(), getColumn());
-        return null;
+        return super.comparison(type);
     }
 
     @Override
     public Type cast(Type castType) {
-        if (castType instanceof IntType || castType instanceof CharType || castType instanceof RealType)
+        if (castType instanceof IntType || castType instanceof RealType)
             return castType;
-        return null;
+        return super.cast(castType);
     }
 
     @Override
     public boolean promotableTo(Type to) {
-        if(to instanceof FunctionType && ((FunctionType)to).getReturnType() instanceof CharType)
-            return true;
-        if (to instanceof RealType || to instanceof IntType || to instanceof CharType)
+        if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof RealType)
+                || to instanceof RealType)
             return true;
         return false;
+    }
+
+    @Override
+    public Type assignment(Type type) {
+        if (type instanceof RealType || type instanceof CharType || type instanceof IntType)
+            return type;
+        return super.assignment(type);
     }
 }

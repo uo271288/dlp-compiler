@@ -32,36 +32,42 @@ public class IntType extends AbstractType {
 
     @Override
     public Type arithmetic(Type type) {
-        if (type instanceof CharType || type instanceof IntType)
-            return new IntType(type.getLine(), type.getColumn());
-        if (type instanceof RealType)
-            return new RealType(type.getLine(), type.getColumn());
+        if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
+            return type;
         return super.arithmetic(type);
     }
 
     @Override
     public Type logical(Type type) {
-        return type instanceof IntType ? type : null;
+        return type instanceof IntType ? type : super.logical(type);
     }
 
     @Override
-    public Type comparison(Type leftType) {
-        if (leftType instanceof IntType || leftType instanceof CharType || leftType instanceof RealType)
-            return new IntType(getLine(), getColumn());
-        return null;
+    public Type comparison(Type type) {
+        if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
+            return this;
+        return super.comparison(type);
     }
 
     @Override
     public Type cast(Type castType) {
         if (castType instanceof IntType || castType instanceof CharType || castType instanceof RealType)
             return castType;
-        return null;
+        return super.cast(castType);
     }
 
     @Override
     public boolean promotableTo(Type to) {
-        if (to instanceof IntType)
+        if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof IntType)
+                || to instanceof IntType)
             return true;
         return false;
+    }
+
+    @Override
+    public Type assignment(Type type) {
+        if (type instanceof IntType)
+            return type;
+        return super.assignment(type);
     }
 }

@@ -1,7 +1,10 @@
 package es.uniovi.dlp.ast.types;
 
 import es.uniovi.dlp.ast.AbstractASTNode;
+import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Type;
+
+import java.util.List;
 
 public abstract class AbstractType extends AbstractASTNode implements Type {
 
@@ -18,17 +21,17 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type arithmetic(Type type) {
-        return type instanceof ErrorType?type:null;
+        return type instanceof ErrorType ? type : null;
     }
 
     @Override
     public Type logical(Type type) {
-        return type instanceof ErrorType?type:null;
+        return type instanceof ErrorType ? type : null;
     }
 
     @Override
     public Type indexing(Type type) {
-        return type instanceof ErrorType?type:null;
+        return type instanceof ErrorType ? type : null;
     }
 
     @Override
@@ -38,12 +41,22 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public Type cast(Type type) {
-        return type instanceof ErrorType?type:null;
+        return type instanceof ErrorType ? type : null;
     }
 
     @Override
     public Type comparison(Type type) {
-        return type instanceof ErrorType?type:null;
+        return type instanceof ErrorType ? type : null;
+    }
+
+    @Override
+    public Type assignment(Type type) {
+        return type instanceof ErrorType ? type : null;
+    }
+
+    @Override
+    public Type call(List<Expression> args){
+        return null;
     }
 
     @Override
@@ -67,8 +80,8 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     }
 
     @Override
-    public boolean allowDot() {
-        return false;
+    public boolean allowDot(String field) {
+        return true;
     }
 
     @Override
@@ -78,6 +91,11 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
 
     @Override
     public boolean isComparable() {
+        return false;
+    }
+
+    @Override
+    public boolean hasDifferentArgs(List<Expression> args){
         return false;
     }
 }

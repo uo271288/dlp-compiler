@@ -1,5 +1,6 @@
 package es.uniovi.dlp.ast.types;
 
+import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.ast.definitions.VariableDefinition;
 import es.uniovi.dlp.visitor.Visitor;
@@ -44,5 +45,27 @@ public class FunctionType extends AbstractType {
     @Override
     public boolean isLogical() {
         return returnType instanceof IntType ? true : false;
+    }
+
+    @Override
+    public boolean promotableTo(Type to) {
+        return returnType.promotableTo(to);
+    }
+
+    @Override
+    public Type call(List<Expression> args) {
+        if (hasDifferentArgs(args))
+            return super.call(args);
+        for (int i = 0; i < args.size(); i++)
+            if (!args.get(i).getType().promotableTo(params.get(i).getType()))
+                return super.call(args);
+        return this;
+    }
+
+    @Override
+    public boolean hasDifferentArgs(List<Expression> args) {
+        if (args.size() != params.size())
+            return true;
+        return false;
     }
 }

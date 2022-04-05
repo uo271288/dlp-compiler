@@ -37,11 +37,14 @@ public class StructType extends AbstractType {
         for (StructField field : fields)
             if (field.getName().equals(fieldName))
                 return field.getType();
-        return null;
+        return super.dot(fieldName);
     }
 
     @Override
-    public boolean allowDot() {
-        return true;
+    public boolean allowDot(String fieldName) {
+        for (StructField field : fields)
+            if (field.getName().equals(fieldName))
+                return true;
+        return false;
     }
 }

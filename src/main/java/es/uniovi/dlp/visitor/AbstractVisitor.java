@@ -31,16 +31,18 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
 
     @Override
     public ReturnType visit(Assignment assignment, ParamType param) {
-        assignment.getLeftExpr().accept(this, param);
-        assignment.getRightExpr().accept(this, param);
+        ReturnType leftType = assignment.getLeftExpr().accept(this, param);
+        ReturnType rightType = assignment.getRightExpr().accept(this, param);
+        if (leftType instanceof ErrorType) return leftType;
+        if (rightType instanceof ErrorType) return rightType;
         return null;
     }
 
     @Override
     public ReturnType visit(Conditional conditional, ParamType param) {
-        conditional.getCondition().accept(this, param);
         conditional.getIfBody().forEach(statement -> statement.accept(this, param));
         conditional.getElseBody().forEach(statement -> statement.accept(this, param));
+        conditional.getCondition().accept(this, param);
         return null;
     }
 
@@ -64,8 +66,8 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
 
     @Override
     public ReturnType visit(While aWhile, ParamType param) {
-        aWhile.getCondition().accept(this, param);
         aWhile.getBody().forEach(statement -> statement.accept(this, param));
+        aWhile.getCondition().accept(this, param);
         return null;
     }
 
@@ -85,8 +87,8 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
 
     @Override
     public ReturnType visit(Cast cast, ParamType param) {
-        cast.getExpression().accept(this, param);
         cast.getCastType().accept(this, param);
+        cast.getExpression().accept(this, param);
         return null;
     }
 
@@ -162,8 +164,8 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
 
     @Override
     public ReturnType visit(FunctionType functionType, ParamType param) {
-        functionType.getParams().forEach(variableDefinition -> variableDefinition.accept(this, param));
         functionType.getReturnType().accept(this, param);
+        functionType.getParams().forEach(variableDefinition -> variableDefinition.accept(this, param));
         return null;
     }
 

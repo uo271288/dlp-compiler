@@ -5,6 +5,7 @@ import es.uniovi.dlp.ast.definitions.FunctionDefinition;
 import es.uniovi.dlp.ast.definitions.VariableDefinition;
 import es.uniovi.dlp.ast.expressions.FunctionInvocation;
 import es.uniovi.dlp.ast.expressions.Variable;
+import es.uniovi.dlp.ast.types.ErrorType;
 import es.uniovi.dlp.ast.types.StructType;
 import es.uniovi.dlp.error.Error;
 import es.uniovi.dlp.error.ErrorManager;
@@ -36,7 +37,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
         else
             ErrorManager.getInstance().addError(new Error(new Location(varDef.getLine(), varDef.getColumn()),
                     ErrorReason.VARIABLE_ALREADY_DECLARED));
-        varDef.getType().accept(this, param);
+        super.visit(varDef, param);
         return null;
     }
 
@@ -48,9 +49,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
             ErrorManager.getInstance().addError(new Error(new Location(funDef.getLine(), funDef.getColumn()),
                     ErrorReason.FUNCTION_ALREADY_DECLARED));
         st.set();
-        funDef.getType().accept(this, param);
-        funDef.getLocalVars().forEach(var -> var.accept(this, param));
-        funDef.getStatements().forEach(statement -> statement.accept(this, param));
+        super.visit(funDef, param);
         st.reset();
         return null;
     }
@@ -58,25 +57,25 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         var find = st.find(functionInvocation.getVariable().getName());
-        if (find == null)
+        if (find == null) {
             ErrorManager.getInstance().addError(new Error(new Location(functionInvocation.getLine(), functionInvocation.getColumn()),
                     ErrorReason.FUNCTION_NOT_DECLARED));
-        else {
-            functionInvocation.getArgs().forEach(expression -> expression.accept(this, param));
-            functionInvocation.getVariable().accept(this, param);
-            return null;
-        }
+        } else
+            super.visit(functionInvocation, param);
         return null;
     }
 
     @Override
     public Type visit(Variable variable, Type param) {
         var find = st.find(variable.getName());
-        if (find == null)
+        if (find == null) {
             ErrorManager.getInstance().addError(new Error(new Location(variable.getLine(), variable.getColumn()),
                     ErrorReason.VARIABLE_NOT_DECLARED));
-        else
+            variable.setDefinition(new VariableDefinition(new ErrorType(variable.getLine(), variable.getColumn(), "Variable not declared"),
+                    "Error", variable.getLine(), variable.getColumn()));
+        } else
             variable.setDefinition(find);
+        super.visit(variable, param);
         return null;
     }
 }
