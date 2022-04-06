@@ -48,10 +48,10 @@ public class OffsetVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FunctionType functionType, Type param) {
         super.visit(functionType, param);
         int paramsOffset = 4;
-//        for (int i = functionType.getParams().size()-1;i==0;i--) {
-//            paramsOffset += functionType.getParams().get(i).getType().getNumberOfBytes();
-//            functionType.getParams().get(i).setOffset(paramsOffset);
-//        }
+        for (int i = functionType.getParams().size() - 1; i >= 0; i--) {
+            functionType.getParams().get(i).setOffset(paramsOffset);
+            paramsOffset += functionType.getParams().get(i).getType().getNumberOfBytes();
+        }
         return null;
     }
 }
