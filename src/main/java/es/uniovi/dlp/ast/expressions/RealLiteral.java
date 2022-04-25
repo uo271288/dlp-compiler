@@ -12,6 +12,9 @@ public class RealLiteral extends AbstractExpression {
         this.value = value;
     }
 
+    public double getValue() {
+        return value;
+    }
 
     @Override
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {

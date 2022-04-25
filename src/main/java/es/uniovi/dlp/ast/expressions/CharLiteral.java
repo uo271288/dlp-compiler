@@ -12,6 +12,9 @@ public class CharLiteral extends AbstractExpression {
         this.value = value;
     }
 
+    public char getValue() {
+        return value;
+    }
 
     @Override
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
