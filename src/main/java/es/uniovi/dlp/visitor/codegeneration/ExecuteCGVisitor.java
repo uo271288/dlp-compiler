@@ -80,8 +80,9 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         cg.line(functionInvocation.getLine());
         functionInvocation.accept(valueCGV, param);
-        if (!(((FunctionType) functionInvocation.getType()).getReturnType() instanceof VoidType))
-            cg.pop();
+        if (functionInvocation.getType() instanceof FunctionType functionType) // I'm sure this is wrong, ask Emi bout this
+            if (!(functionType.getReturnType() instanceof VoidType))
+                cg.pop();
         return null;
     }
 

@@ -53,7 +53,8 @@ public class Compiler {
         assignType();
         assignOffset();
         checkErrors();
-        generateCode();
+        if (!ErrorManager.getInstance().hasErrors())
+            generateCode();
     }
 
     private void checkErrors() {
