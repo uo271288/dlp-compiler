@@ -42,8 +42,7 @@ public class CodeGeneration {
 
     public void source() {
         newLine();
-        String name = Arrays.asList(filename.split("/")).get(Arrays.asList(filename.split("/")).size() - 1);
-        write("#source\t" + '"' + name + '"', false);
+        write("#source\t" + '"' + filename + '"', false);
         newLine();
     }
 

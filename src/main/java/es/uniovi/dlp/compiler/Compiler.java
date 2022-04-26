@@ -13,6 +13,7 @@ import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
 import org.antlr.v4.runtime.CommonTokenStream;
 
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -51,10 +52,10 @@ public class Compiler {
         program = parse(filename);
         assignScope();
         assignType();
-        assignOffset();
         checkErrors();
-        if (!ErrorManager.getInstance().hasErrors())
-            generateCode();
+        if (ErrorManager.getInstance().hasErrors()) return;
+        assignOffset();
+        generateCode();
     }
 
     private void checkErrors() {
@@ -97,7 +98,8 @@ public class Compiler {
     }
 
     private void generateCode() {
-        ExecuteCGVisitor executeCGVisitor = new ExecuteCGVisitor(new CodeGeneration(out, filename));
+        File file = new File(filename);
+        ExecuteCGVisitor executeCGVisitor = new ExecuteCGVisitor(new CodeGeneration(out, file.getName()));
         executeCGVisitor.visit(program, null);
     }
 

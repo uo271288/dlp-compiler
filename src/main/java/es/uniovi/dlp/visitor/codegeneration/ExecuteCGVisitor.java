@@ -15,6 +15,8 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
 
     // if_else counter
     private int conditionalCounter;
+    // while counter
+    private int whileCounter;
 
     public ExecuteCGVisitor(CodeGeneration cg) {
         this.cg = cg;
@@ -73,8 +75,9 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
         cg.enter(localVarsSize);
         funcDef.getStatements().forEach(statement ->
                 statement.accept(this, param));
-        if (funcType.getReturnType() instanceof VoidType)
+        if (funcType.getReturnType() instanceof VoidType) {
             cg.ret(0, localVarsSize, paramsSize);
+        }
 
         return null;
     }
@@ -83,9 +86,11 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         cg.line(functionInvocation.getLine());
         functionInvocation.accept(valueCGV, param);
-        if (functionInvocation.getType() instanceof FunctionType functionType)
-            if (!(functionType.getReturnType() instanceof VoidType))
+        if (functionInvocation.getType() instanceof FunctionType functionType) {
+            if (!(functionType.getReturnType() instanceof VoidType)) {
                 cg.pop(functionType.getReturnType());
+            }
+        }
         return null;
     }
 
@@ -142,6 +147,20 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
         cg.comment("Body of the else branch");
         conditional.getElseBody().forEach(statement -> statement.accept(this, param));
         cg.label("end_if_" + conditionalCounter++);
+        return null;
+    }
+
+    @Override
+    public Type visit(While aWhile, Type param) {
+        cg.line(aWhile.getLine());
+        cg.comment("While statement");
+        cg.label("while_" + whileCounter);
+        aWhile.getCondition().accept(valueCGV, param);
+        cg.jz("fin_while_" + whileCounter);
+        cg.comment("Body of the while statement");
+        aWhile.getBody().forEach(statement -> statement.accept(this, param));
+        cg.jmp("while_" + whileCounter);
+        cg.label("fin_while_" + whileCounter++);
         return null;
     }
 }
