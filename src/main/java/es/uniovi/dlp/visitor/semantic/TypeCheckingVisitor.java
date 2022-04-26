@@ -1,6 +1,7 @@
 package es.uniovi.dlp.visitor.semantic;
 
 import es.uniovi.dlp.ast.Type;
+import es.uniovi.dlp.ast.definitions.FunctionDefinition;
 import es.uniovi.dlp.ast.expressions.*;
 import es.uniovi.dlp.ast.statements.*;
 import es.uniovi.dlp.ast.types.*;
@@ -11,6 +12,12 @@ import es.uniovi.dlp.error.Location;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
+
+    @Override
+    public Type visit(FunctionDefinition funcDef, Type param) {
+        super.visit(funcDef, funcDef.getType());
+        return null;
+    }
 
     @Override
     public Type visit(Assignment assignment, Type param) {
