@@ -91,4 +91,13 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
         cg.load(variable.getType());
         return null;
     }
+
+    @Override
+    public Type visit(ArrayAccess arrayAccess, Type param) {
+
+        arrayAccess.getArray().accept(addressCGV, param);
+
+
+        return null;
+    }
 }

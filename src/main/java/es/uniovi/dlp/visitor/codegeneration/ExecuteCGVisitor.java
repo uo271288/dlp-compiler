@@ -75,9 +75,7 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
         cg.enter(localVarsSize);
         funcDef.getStatements().forEach(statement ->
                 statement.accept(this, param));
-        if (funcType.getReturnType() instanceof VoidType) {
-            cg.ret(0, localVarsSize, paramsSize);
-        }
+        cg.ret(funcType.getReturnType().getNumberOfBytes(), localVarsSize, paramsSize);
 
         return null;
     }
@@ -122,15 +120,6 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
         cg.comment("Write");
         puts.getExpression().accept(valueCGV, param);
         cg.out(puts.getExpression().getType());
-        return null;
-    }
-
-    @Override
-    public Type visit(Return aReturn, Type param) {
-        if (aReturn.getExpression() != null) {
-            aReturn.accept(valueCGV, param);
-        }
-//        cg.ret(aReturn);
         return null;
     }
 
