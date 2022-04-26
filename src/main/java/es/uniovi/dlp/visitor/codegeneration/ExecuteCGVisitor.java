@@ -13,6 +13,9 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
     private ValueCGVisitor valueCGV;
     private AddressCGVisitor addressCGV;
 
+    // if_else counter
+    private int conditionalCounter;
+
     public ExecuteCGVisitor(CodeGeneration cg) {
         this.cg = cg;
         valueCGV = new ValueCGVisitor(cg, new AddressCGVisitor(cg));
@@ -80,9 +83,9 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FunctionInvocation functionInvocation, Type param) {
         cg.line(functionInvocation.getLine());
         functionInvocation.accept(valueCGV, param);
-        if (functionInvocation.getType() instanceof FunctionType functionType) // I'm sure this is wrong, ask Emi bout this
+        if (functionInvocation.getType() instanceof FunctionType functionType)
             if (!(functionType.getReturnType() instanceof VoidType))
-                cg.pop();
+                cg.pop(functionType.getReturnType());
         return null;
     }
 
@@ -123,6 +126,22 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Type> {
             aReturn.accept(valueCGV, param);
         }
 //        cg.ret(aReturn);
+        return null;
+    }
+
+    @Override
+    public Type visit(Conditional conditional, Type param) {
+        cg.line(conditional.getLine());
+        cg.comment("If statement");
+        conditional.getCondition().accept(valueCGV, param);
+        cg.jz("else_" + conditionalCounter);
+        cg.comment("Body of the if branch");
+        conditional.getIfBody().forEach(statement -> statement.accept(this, param));
+        cg.jmp("end_if_" + conditionalCounter);
+        cg.label("else_" + conditionalCounter);
+        cg.comment("Body of the else branch");
+        conditional.getElseBody().forEach(statement -> statement.accept(this, param));
+        cg.label("end_if_" + conditionalCounter++);
         return null;
     }
 }

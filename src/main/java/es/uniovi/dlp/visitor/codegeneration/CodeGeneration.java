@@ -70,7 +70,7 @@ public class CodeGeneration {
     }
 
     public void push(Type type, int value) {
-        write("push" + getSufix(type) + "\t" + value);
+        write("push" + getSuffix(type) + "\t" + value);
     }
 
     public void push(int value) {
@@ -91,7 +91,7 @@ public class CodeGeneration {
     }
 
     private void instruction(String operation, Type type) {
-        write(operation + getSufix(type));
+        write(operation + getSuffix(type));
     }
 
     private void instruction(String operation) {
@@ -174,26 +174,34 @@ public class CodeGeneration {
     }
 
     public void store(Type type) {
-        write("store" + getSufix(type));
+        write("store" + getSuffix(type));
     }
 
     public void load(Type type) {
-        write("load" + getSufix(type));
+        write("load" + getSuffix(type));
     }
 
     public void in(Type type) {
-        write("in" + getSufix(type));
+        write("in" + getSuffix(type));
     }
 
     public void out(Type type) {
-        write("out" + getSufix(type));
+        write("out" + getSuffix(type));
     }
 
-    public void pop() {
-        write("popi");
+    public void pop(Type type) {
+        write("pop" + getSuffix(type));
     }
 
-    public String getSufix(Type type) {
+    public void jmp(String label) {
+        write("jmp " + label);
+    }
+
+    public void jz(String label) {
+        write("jz " + label);
+    }
+
+    public String getSuffix(Type type) {
         if (type instanceof CharType) {
             return "b";
         }
