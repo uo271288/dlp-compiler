@@ -98,4 +98,9 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
     public int getNumberOfBytes() {
         return 0;
     }
+
+    @Override
+    public int getFieldOffset(String field) {
+        return -1024; // return min stack address?
+    }
 }

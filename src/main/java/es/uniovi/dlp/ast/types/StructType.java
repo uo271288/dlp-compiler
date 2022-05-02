@@ -55,4 +55,12 @@ public class StructType extends AbstractType {
             offset += field.getType().getNumberOfBytes();
         return offset;
     }
+
+    @Override
+    public int getFieldOffset(String field) {
+        for (StructField structField : fields)
+            if (structField.getName().equals(field))
+                return structField.getOffset();
+        return super.getFieldOffset(field);
+    }
 }

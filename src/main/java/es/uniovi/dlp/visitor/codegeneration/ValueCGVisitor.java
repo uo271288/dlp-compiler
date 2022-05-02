@@ -99,4 +99,12 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
         cg.load(arrayAccess.getType());
         return null;
     }
+
+    @Override
+    public Type visit(FieldAccess fieldAccess, Type param) {
+        fieldAccess.accept(addressCGV, param);
+        cg.promoteTo(fieldAccess.getExpression().getType(), fieldAccess.getType());
+        cg.load(fieldAccess.getType());
+        return null;
+    }
 }

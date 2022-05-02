@@ -20,4 +20,6 @@ public interface Type extends ASTNode {
     boolean isCast();
     boolean hasDifferentArgs(List<Expression> args);
     int getNumberOfBytes();
+
+    int getFieldOffset(String field);
 }

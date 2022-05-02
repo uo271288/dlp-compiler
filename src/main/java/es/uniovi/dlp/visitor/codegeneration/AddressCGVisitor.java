@@ -42,4 +42,12 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
         cg.add();
         return null;
     }
+
+    @Override
+    public Type visit(FieldAccess fieldAccess, Type param) {
+        super.visit(fieldAccess, param);
+        cg.push(fieldAccess.getExpression().getType().getFieldOffset(fieldAccess.getField()));
+        cg.add();
+        return null;
+    }
 }
