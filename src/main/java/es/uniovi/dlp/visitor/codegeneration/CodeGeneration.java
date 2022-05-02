@@ -89,6 +89,10 @@ public class CodeGeneration {
         write("addi");
     }
 
+    public void mul() {
+        write("muli");
+    }
+
     private void instruction(String operation, Type type) {
         write(operation + getSuffix(type));
     }

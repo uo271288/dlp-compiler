@@ -18,7 +18,6 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
         this.valueCGV = valueCGV;
     }
 
-
     @Override
     public Type visit(Variable variable, Type param) {
         super.visit(variable, param);
@@ -30,6 +29,17 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
                 cg.push(varDef.getOffset());
                 cg.add();
             }
+        return null;
+    }
+
+    @Override
+    public Type visit(ArrayAccess arrayAccess, Type param) {
+
+        arrayAccess.getArray().accept(this, param);
+        arrayAccess.getIndex().accept(valueCGV, param);
+        cg.push(arrayAccess.getArray().getType(), arrayAccess.getType().getNumberOfBytes());
+        cg.mul();
+        cg.add();
         return null;
     }
 }
