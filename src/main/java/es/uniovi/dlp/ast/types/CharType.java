@@ -48,12 +48,17 @@ public class CharType extends AbstractType {
         return super.cast(castType);
     }
 
+//    @Override
+//    public boolean promotableTo(Type to) {
+//        if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof CharType)
+//                || to instanceof CharType)
+//            return true;
+//        return false;
+//    }
+//
     @Override
     public boolean promotableTo(Type to) {
-        if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof CharType)
-                        || to instanceof CharType)
-            return true;
-        return false;
+        return to instanceof IntType || to instanceof RealType || super.promotableTo(to);
     }
 
     @Override

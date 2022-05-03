@@ -12,6 +12,7 @@ public interface Type extends ASTNode {
     Type comparison(Type type);
     Type assignment(Type type);
     Type call(List<Expression> args);
+//    Type getIntermediateType(Type to);
     boolean promotableTo(Type to);
     boolean isLogical();
     boolean isIndexable();

@@ -103,36 +103,40 @@ public class CodeGeneration {
 
     public void logic(String operator) {
 
-        switch (operator) {
-            case "&&" -> instruction("and");
-            case "||" -> instruction("or");
-            case "!" -> instruction("not");
-        }
-
+        String instruction = switch (operator) {
+            case "&&" -> "and";
+            case "||" -> "or";
+            case "!" -> "not";
+            default -> "";
+        };
+        instruction(instruction);
     }
 
     public void arithmetic(String operator, Type type) {
 
-        switch (operator) {
-            case "+" -> instruction("add", type);
-            case "-" -> instruction("sub", type);
-            case "*" -> instruction("mul", type);
-            case "/" -> instruction("div", type);
-            case "%" -> instruction("mod", type);
-        }
-
+        String instruction = switch (operator) {
+            case "+" -> "add";
+            case "-" -> "sub";
+            case "*" -> "mul";
+            case "/" -> "div";
+            case "%" -> "mod";
+            default -> "";
+        };
+        instruction(instruction, type);
     }
 
     public void comparison(String operator, Type type) {
 
-        switch (operator) {
-            case ">" -> instruction("gt", type);
-            case "<" -> instruction("lt", type);
-            case ">=" -> instruction("ge", type);
-            case "<=" -> instruction("le", type);
-            case "==" -> instruction("eq", type);
-            case "!=" -> instruction("ne", type);
-        }
+        String instruction = switch (operator) {
+            case ">" -> "gt";
+            case "<" -> "lt";
+            case ">=" -> "ge";
+            case "<=" -> "le";
+            case "==" -> "eq";
+            case "!=" -> "ne";
+            default -> "";
+        };
+        instruction(instruction, type);
     }
 
     public void b2i() {
@@ -150,6 +154,20 @@ public class CodeGeneration {
     public void i2b() {
         write("i2b");
     }
+
+//    public void cast(Type from, Type to) {
+//        castIntermediate(from, to);
+//    }
+//
+//    public void castIntermediate(Type from, Type to) {
+//        if (from.equals(to)) {
+//            return;
+//        }
+//
+//        Type intermediate = from.getIntermediateType(to);
+//        write(getSuffix(from) + "2" + getSuffix(to));
+//        castIntermediate(intermediate, to);
+//    }
 
     public void promoteTo(Type from, Type to) {
         if (from instanceof CharType) {

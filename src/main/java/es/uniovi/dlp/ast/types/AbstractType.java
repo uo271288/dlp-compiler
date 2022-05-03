@@ -59,6 +59,21 @@ public abstract class AbstractType extends AbstractASTNode implements Type {
         return null;
     }
 
+//    public Type getIntermediateType(Type to) {
+//        if (to instanceof ErrorType) {
+//            return new ErrorType(0, 0, "");
+//        }
+//        return null;
+//    }
+//
+//    @Override
+//    public boolean promotableTo(Type to) {
+//        if (to instanceof ErrorType) {
+//            return true;
+//        }
+//        return to.equals(to);
+//    }
+
     @Override
     public boolean promotableTo(Type to) {
         return false;

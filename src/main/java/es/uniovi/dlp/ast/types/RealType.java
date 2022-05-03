@@ -48,6 +48,7 @@ public class RealType extends AbstractType {
         return super.cast(castType);
     }
 
+    // remove
     @Override
     public boolean promotableTo(Type to) {
         if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof RealType)
