@@ -71,7 +71,7 @@ public class IdentificationVisitor extends AbstractVisitor<Type, Type> {
         if (find == null) {
             ErrorManager.getInstance().addError(new Error(new Location(variable.getLine(), variable.getColumn()),
                     ErrorReason.VARIABLE_NOT_DECLARED));
-            variable.setDefinition(new VariableDefinition(new ErrorType(variable.getLine(), variable.getColumn(), "Variable not declared"),
+            variable.setDefinition(new VariableDefinition(ErrorType.getInstance(),
                     "Error", variable.getLine(), variable.getColumn()));
         } else
             variable.setDefinition(find);

@@ -4,16 +4,22 @@ import es.uniovi.dlp.visitor.Visitor;
 
 public class ErrorType extends AbstractType {
 
-    private String message;
+    private static ErrorType instance;
 
-    public ErrorType(int line, int column, String message) {
-        super(line, column);
-        this.message = message;
+    private ErrorType() {
+
+        super(0, 0);
+    }
+
+    public static ErrorType getInstance() {
+        if (instance == null)
+            instance = new ErrorType();
+        return instance;
     }
 
     @Override
     public String getTypeExpression() {
-        return "Error: " + message + " line: " + getLine() + ", column: " + getColumn();
+        return "Error: line: " + getLine() + ", column: " + getColumn();
     }
 
     @Override

@@ -48,7 +48,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         arithmetic.setType(arithmetic.getOperand1().getType().arithmetic(arithmetic.getOperand2().getType()));
         if (arithmetic.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(arithmetic.getLine(), arithmetic.getColumn()), ErrorReason.INVALID_ARITHMETIC));
-            arithmetic.setType(new ErrorType(0, 0, ""));
+            arithmetic.setType(ErrorType.getInstance());
         }
         return null;
     }
@@ -58,9 +58,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(unaryMinus, param);
         if (!unaryMinus.getExpression().getType().isArithmetic()) {
             ErrorManager.getInstance().addError(new Error(new Location(unaryMinus.getLine(), unaryMinus.getColumn()), ErrorReason.INVALID_ARITHMETIC));
-            unaryMinus.setType(new ErrorType(0, 0, ""));
+            unaryMinus.setType( ErrorType.getInstance());
         }
-        unaryMinus.setType(new IntType(unaryMinus.getExpression().getLine(), unaryMinus.getExpression().getColumn()));
+        unaryMinus.setType(IntType.getInstance());
         return null;
     }
 
@@ -69,9 +69,9 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(not, param);
         if (!not.getExpression().getType().isLogical()) {
             ErrorManager.getInstance().addError(new Error(new Location(not.getLine(), not.getColumn()), ErrorReason.NOT_LOGICAL));
-            not.setType(new ErrorType(0, 0, ""));
+            not.setType(ErrorType.getInstance());
         }
-        not.setType(new IntType(not.getExpression().getLine(), not.getExpression().getColumn()));
+        not.setType(IntType.getInstance());
         return null;
     }
 
@@ -81,7 +81,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         logical.setType(logical.getOperand1().getType().logical(logical.getOperand2().getType()));
         if (logical.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(logical.getLine(), logical.getColumn()), ErrorReason.INVALID_LOGICAL));
-            logical.setType(new ErrorType(0, 0, ""));
+            logical.setType(ErrorType.getInstance());
         }
         return null;
     }
@@ -109,21 +109,21 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(IntLiteral intLiteral, Type param) {
         super.visit(intLiteral, param);
-        intLiteral.setType(new IntType(intLiteral.getLine(), intLiteral.getColumn()));
+        intLiteral.setType(IntType.getInstance());
         return null;
     }
 
     @Override
     public Type visit(RealLiteral realLiteral, Type param) {
         super.visit(realLiteral, param);
-        realLiteral.setType(new RealType(realLiteral.getLine(), realLiteral.getColumn()));
+        realLiteral.setType( RealType.getInstance());
         return null;
     }
 
     @Override
     public Type visit(CharLiteral charLiteral, Type param) {
         super.visit(charLiteral, param);
-        charLiteral.setType(new CharType(charLiteral.getLine(), charLiteral.getColumn()));
+        charLiteral.setType( CharType.getInstance());
         return null;
     }
 
@@ -141,18 +141,18 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(functionInvocation, param);
         if (functionInvocation.getVariable().getDefinition().getType().hasDifferentArgs(functionInvocation.getArgs())) {
             ErrorManager.getInstance().addError(new Error(new Location(functionInvocation.getVariable().getLine(), functionInvocation.getVariable().getColumn()), ErrorReason.INVALID_ARGS));
-            functionInvocation.setType(new ErrorType(0, 0, ""));
+            functionInvocation.setType(ErrorType.getInstance());
             return null;
         }
         if (!(functionInvocation.getVariable().getDefinition().getType() instanceof FunctionType)) {
             ErrorManager.getInstance().addError(new Error(new Location(functionInvocation.getVariable().getLine(), functionInvocation.getVariable().getColumn()), ErrorReason.INVALID_INVOCATION));
-            functionInvocation.setType(new ErrorType(0, 0, ""));
+            functionInvocation.setType(ErrorType.getInstance());
             return null;
         }
         functionInvocation.setType(functionInvocation.getVariable().getDefinition().getType().call(functionInvocation.getArgs()));
         if (functionInvocation.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(functionInvocation.getVariable().getLine(), functionInvocation.getVariable().getColumn()), ErrorReason.INVALID_ARGS));
-            functionInvocation.setType(new ErrorType(0, 0, ""));
+            functionInvocation.setType(ErrorType.getInstance());
         }
         return null;
     }
@@ -163,7 +163,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         comparison.setType(comparison.getOperand1().getType().comparison(comparison.getOperand2().getType()));
         if (comparison.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(comparison.getLine(), comparison.getColumn()), ErrorReason.INVALID_COMPARISON));
-            comparison.setType(new ErrorType(0, 0, ""));
+            comparison.setType(ErrorType.getInstance());
         }
         return null;
     }
@@ -174,12 +174,12 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         arrayAccess.setType(arrayAccess.getArray().getType().indexing(arrayAccess.getIndex().getType()));
         if (!arrayAccess.getArray().getType().isIndexable()) {
             ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getLine(), arrayAccess.getColumn()), ErrorReason.INVALID_INDEXING));
-            arrayAccess.setType(new ErrorType(0, 0, ""));
+            arrayAccess.setType(ErrorType.getInstance());
             return null;
         }
         if (arrayAccess.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(arrayAccess.getIndex().getLine(), arrayAccess.getIndex().getColumn()), ErrorReason.INVALID_INDEX_EXPRESSION));
-            arrayAccess.setType(new ErrorType(0, 0, ""));
+            arrayAccess.setType(ErrorType.getInstance());
         }
         return null;
     }
@@ -190,7 +190,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         cast.setType(cast.getExpression().getType().cast(cast.getCastType()));
         if (cast.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(cast.getLine(), cast.getColumn()), ErrorReason.INVALID_CAST));
-            cast.setType(new ErrorType(0, 0, ""));
+            cast.setType(ErrorType.getInstance());
         }
         return null;
     }
@@ -200,13 +200,13 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(fieldAccess, param);
         if (!fieldAccess.getExpression().getType().allowDot(fieldAccess.getField())) {
             ErrorManager.getInstance().addError(new Error(new Location(fieldAccess.getLine(), fieldAccess.getColumn()), ErrorReason.NO_SUCH_FIELD));
-            fieldAccess.setType(new ErrorType(0, 0, ""));
+            fieldAccess.setType(ErrorType.getInstance());
             return null;
         }
         fieldAccess.setType(fieldAccess.getExpression().getType().dot(fieldAccess.getField()));
         if (fieldAccess.getType() == null) {
             ErrorManager.getInstance().addError(new Error(new Location(fieldAccess.getLine(), fieldAccess.getColumn()), ErrorReason.INVALID_DOT));
-            fieldAccess.setType(new ErrorType(0, 0, ""));
+            fieldAccess.setType(ErrorType.getInstance());
         }
         return null;
     }

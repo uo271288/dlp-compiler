@@ -488,7 +488,7 @@ public class XanaParser extends Parser {
 				{
 				setState(80);
 				match(T__6);
-				((SimpleTypeContext)_localctx).ast =  new IntType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
+				((SimpleTypeContext)_localctx).ast =  IntType.getInstance();
 				}
 				break;
 			case T__7:
@@ -496,7 +496,7 @@ public class XanaParser extends Parser {
 				{
 				setState(82);
 				match(T__7);
-				((SimpleTypeContext)_localctx).ast =  new RealType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
+				((SimpleTypeContext)_localctx).ast =  RealType.getInstance();
 				}
 				break;
 			case T__8:
@@ -504,7 +504,7 @@ public class XanaParser extends Parser {
 				{
 				setState(84);
 				match(T__8);
-				((SimpleTypeContext)_localctx).ast =  new CharType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
+				((SimpleTypeContext)_localctx).ast =  CharType.getInstance();
 				}
 				break;
 			default:
@@ -772,7 +772,7 @@ public class XanaParser extends Parser {
 				{
 				setState(128);
 				match(T__13);
-				((ReturnTypeContext)_localctx).ast =  new VoidType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
+				((ReturnTypeContext)_localctx).ast =  VoidType.getInstance();
 				}
 				break;
 			case T__6:
@@ -872,7 +872,7 @@ public class XanaParser extends Parser {
 			setState(147);
 			match(T__5);
 
-			                    FunctionType type = new FunctionType(new ArrayList<>(), new VoidType(_localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1), _localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
+			                    FunctionType type = new FunctionType(new ArrayList<>(), VoidType.getInstance(), _localctx.start.getLine(), _localctx.start.getCharPositionInLine() + 1);
 			                    List<VariableDefinition> defs = new ArrayList<VariableDefinition>();
 			                    for(var v : ((MainFuncContext)_localctx).vars) {
 			                        defs.addAll(v.astList);

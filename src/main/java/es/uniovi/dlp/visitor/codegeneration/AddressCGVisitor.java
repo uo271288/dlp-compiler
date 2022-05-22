@@ -27,7 +27,7 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
                 cg.pusha(varDef.getOffset());
             else {
                 cg.pushBp();
-                cg.push(new IntType(0, 0), varDef.getOffset());
+                cg.push(IntType.getInstance(), varDef.getOffset());
                 cg.add();
             }
         return null;
@@ -38,7 +38,7 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
 
         arrayAccess.getArray().accept(this, param);
         arrayAccess.getIndex().accept(valueCGV, param);
-        cg.push(new IntType(0,0), arrayAccess.getType().getNumberOfBytes());
+        cg.push(IntType.getInstance(), arrayAccess.getType().getNumberOfBytes());
         cg.mul();
         cg.add();
         return null;
@@ -48,7 +48,7 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FieldAccess fieldAccess, Type param) {
         super.visit(fieldAccess, param);
 
-        cg.push(new IntType(0, 0), fieldAccess.getExpression().getType().getFieldOffset(fieldAccess.getField()));
+        cg.push(IntType.getInstance(), fieldAccess.getExpression().getType().getFieldOffset(fieldAccess.getField()));
         cg.add();
         return null;
     }

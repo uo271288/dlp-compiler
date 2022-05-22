@@ -65,9 +65,9 @@ recordFields returns [List<StructField> astList = new ArrayList<>()]
         ;
 
 simpleType returns [Type ast]
-        : 'int' {$ast = new IntType($start.getLine(), $start.getCharPositionInLine() + 1);}
-        |'double' {$ast = new RealType($start.getLine(), $start.getCharPositionInLine() + 1);}
-        |'char' {$ast = new CharType($start.getLine(), $start.getCharPositionInLine() + 1);}
+        : 'int' {$ast = IntType.getInstance();}
+        |'double' {$ast = RealType.getInstance();}
+        |'char' {$ast = CharType.getInstance();}
         ;
 
 funcDef returns [FunctionDefinition ast]
@@ -99,14 +99,14 @@ param returns [VariableDefinition ast]
         ;
 
 returnType returns [Type ast]
-        : 'void' {$ast = new VoidType($start.getLine(), $start.getCharPositionInLine() + 1);}
+        : 'void' {$ast = VoidType.getInstance();}
         | simpleType {$ast = $simpleType.ast;}
         ;
 
 mainFunc returns [FunctionDefinition ast]
         : 'def' 'main' '(' ')' 'do' (vars+=varDef | stmts+=statement)* 'end'
         {
-                    FunctionType type = new FunctionType(new ArrayList<>(), new VoidType($start.getLine(), $start.getCharPositionInLine() + 1), $start.getLine(), $start.getCharPositionInLine() + 1);
+                    FunctionType type = new FunctionType(new ArrayList<>(), VoidType.getInstance(), $start.getLine(), $start.getCharPositionInLine() + 1);
                     List<VariableDefinition> defs = new ArrayList<VariableDefinition>();
                     for(var v : $vars) {
                         defs.addAll(v.astList);

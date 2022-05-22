@@ -5,9 +5,17 @@ import es.uniovi.dlp.visitor.Visitor;
 
 public class IntType extends AbstractType {
 
-    public IntType(int line, int column) {
+    private static IntType instance;
 
-        super(line, column);
+    private IntType() {
+
+        super(0, 0);
+    }
+
+    public static IntType getInstance() {
+        if (instance == null)
+            instance = new IntType();
+        return instance;
     }
 
     @Override
@@ -58,10 +66,8 @@ public class IntType extends AbstractType {
 
     @Override
     public boolean promotableTo(Type to) {
-        if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof IntType)
-                || to instanceof IntType)
-            return true;
-        return false;
+        return (to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof IntType)
+                || to instanceof IntType;
     }
 
     @Override

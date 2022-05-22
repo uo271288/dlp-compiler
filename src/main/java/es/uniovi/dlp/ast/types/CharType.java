@@ -5,8 +5,17 @@ import es.uniovi.dlp.visitor.Visitor;
 
 public class CharType extends AbstractType {
 
-    public CharType(int line, int column) {
-        super(line, column);
+    private static CharType instance;
+
+    private CharType() {
+
+        super(0, 0);
+    }
+
+    public static CharType getInstance() {
+        if (instance == null)
+            instance = new CharType();
+        return instance;
     }
 
     @Override
@@ -28,16 +37,16 @@ public class CharType extends AbstractType {
     @Override
     public Type arithmetic(Type type) {
         if (type instanceof CharType || type instanceof IntType)
-            return new IntType(type.getLine(), type.getColumn());
+            return IntType.getInstance();
         if (type instanceof RealType)
-            return new RealType(type.getLine(), type.getColumn());
+            return RealType.getInstance();
         return super.arithmetic(type);
     }
 
     @Override
     public Type comparison(Type type) {
         if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
-            return new IntType(getLine(), getColumn());
+            return IntType.getInstance();
         return super.comparison(type);
     }
 
@@ -48,7 +57,7 @@ public class CharType extends AbstractType {
         return super.cast(castType);
     }
 
-//    @Override
+    //    @Override
 //    public boolean promotableTo(Type to) {
 //        if ((to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof CharType)
 //                || to instanceof CharType)
