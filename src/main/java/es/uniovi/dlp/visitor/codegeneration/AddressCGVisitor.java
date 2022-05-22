@@ -3,6 +3,7 @@ package es.uniovi.dlp.visitor.codegeneration;
 import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.ast.expressions.*;
 import es.uniovi.dlp.ast.definitions.*;
+import es.uniovi.dlp.ast.types.IntType;
 import es.uniovi.dlp.visitor.AbstractVisitor;
 
 public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
@@ -26,7 +27,7 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
                 cg.pusha(varDef.getOffset());
             else {
                 cg.pushBp();
-                cg.push(varDef.getOffset());
+                cg.push(new IntType(0, 0), varDef.getOffset());
                 cg.add();
             }
         return null;
@@ -37,7 +38,7 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
 
         arrayAccess.getArray().accept(this, param);
         arrayAccess.getIndex().accept(valueCGV, param);
-        cg.push(arrayAccess.getArray().getType(), arrayAccess.getType().getNumberOfBytes());
+        cg.push(new IntType(0,0), arrayAccess.getType().getNumberOfBytes());
         cg.mul();
         cg.add();
         return null;
@@ -47,7 +48,7 @@ public class AddressCGVisitor extends AbstractVisitor<Type, Type> {
     public Type visit(FieldAccess fieldAccess, Type param) {
         super.visit(fieldAccess, param);
 
-        cg.push(fieldAccess.getExpression().getType().getFieldOffset(fieldAccess.getField()));
+        cg.push(new IntType(0, 0), fieldAccess.getExpression().getType().getFieldOffset(fieldAccess.getField()));
         cg.add();
         return null;
     }

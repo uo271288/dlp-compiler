@@ -20,7 +20,7 @@ public class StructType extends AbstractType {
     public String getTypeExpression() {
         List<String> list = new ArrayList<>();
         fields.forEach(field -> list.add(field.toString()));
-        return "fields{" + String.join(", ", list) + "}";
+        return "record(" + String.join(" x ", list) + ")";
     }
 
     @Override

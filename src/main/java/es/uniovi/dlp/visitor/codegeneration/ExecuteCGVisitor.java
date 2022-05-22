@@ -13,15 +13,12 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Definition> {
     private ValueCGVisitor valueCGV;
     private AddressCGVisitor addressCGV;
 
-    // if_else counter
-    private int conditionalCounter;
-    // while counter
-    private int whileCounter;
-
     public ExecuteCGVisitor(CodeGeneration cg) {
         this.cg = cg;
-        valueCGV = new ValueCGVisitor(cg, new AddressCGVisitor(cg));
-        addressCGV = valueCGV.getAddressCGV();
+        valueCGV = new ValueCGVisitor(cg);
+        addressCGV = new AddressCGVisitor(cg);
+        valueCGV.setAddressCGV(addressCGV);
+        addressCGV.setValueCGV(valueCGV);
     }
 
     @Override
@@ -128,14 +125,16 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Definition> {
         cg.line(conditional.getLine());
         cg.comment("If statement");
         conditional.getCondition().accept(valueCGV, null);
-        cg.jz("else_" + conditionalCounter);
+        int elseLabel = cg.getLabel();
+        int ifEndLabel = cg.getLabel();
+        cg.jz(elseLabel);
         cg.comment("Body of the if branch");
         conditional.getIfBody().forEach(statement -> statement.accept(this, param));
-        cg.jmp("end_if_" + conditionalCounter);
-        cg.label("else_" + conditionalCounter);
+        cg.jmp(ifEndLabel);
+        cg.label(elseLabel);
         cg.comment("Body of the else branch");
         conditional.getElseBody().forEach(statement -> statement.accept(this, param));
-        cg.label("end_if_" + conditionalCounter++);
+        cg.label(ifEndLabel);
         return null;
     }
 
@@ -143,18 +142,21 @@ public class ExecuteCGVisitor extends AbstractVisitor<Type, Definition> {
     public Type visit(While aWhile, Definition param) {
         cg.line(aWhile.getLine());
         cg.comment("While statement");
-        cg.label("while_" + whileCounter);
+        int whileLabel = cg.getLabel();
+        int whileEndLabel = cg.getLabel();
+        cg.label(whileLabel);
         aWhile.getCondition().accept(valueCGV, null);
-        cg.jz("fin_while_" + whileCounter);
+        cg.jz(whileEndLabel);
         cg.comment("Body of the while statement");
         aWhile.getBody().forEach(statement -> statement.accept(this, param));
-        cg.jmp("while_" + whileCounter);
-        cg.label("fin_while_" + whileCounter++);
+        cg.jmp(whileLabel);
+        cg.label(whileEndLabel);
         return null;
     }
 
     @Override
     public Type visit(Return aReturn, Definition param) {
+        cg.line(aReturn.getLine());
         var funcDef = (FunctionDefinition) param;
         cg.comment("Return");
         aReturn.getExpression().accept(valueCGV, null);

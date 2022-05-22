@@ -7,13 +7,13 @@ import es.uniovi.dlp.ast.types.RealType;
 
 import java.io.IOException;
 import java.io.OutputStreamWriter;
-import java.util.Arrays;
 
 public class CodeGeneration {
 
     private int currentLine;
     private OutputStreamWriter outWriter;
     private String filename;
+    private int labelCounter;
 
     public CodeGeneration(OutputStreamWriter outWriter, String filename) {
         this.outWriter = outWriter;
@@ -46,13 +46,16 @@ public class CodeGeneration {
         newLine();
     }
 
+    public void label(int label) {
+        write("label" + label + ":", false);
+    }
+
     public void label(String label) {
         newLine();
         write(label + ":", false);
     }
 
     public void comment(String comment) {
-
         write("' " + comment);
     }
 
@@ -72,12 +75,8 @@ public class CodeGeneration {
         write("push" + getSuffix(type) + "\t" + value);
     }
 
-    public void push(int value) {
-        write("pushi\t" + value);
-    }
-
-    public void push(double value) {
-        write("pushf\t" + value);
+    public void push(Type type, double value) {
+        write("push" + getSuffix(type) + "\t" + value);
     }
 
     public void pushBp() {
@@ -180,7 +179,7 @@ public class CodeGeneration {
         }
         if (from instanceof RealType) {
             if (to instanceof IntType)
-                i2f();
+                f2i();
             if (to instanceof CharType) {
                 f2i();
                 i2b();
@@ -214,12 +213,20 @@ public class CodeGeneration {
         write("pop" + getSuffix(type));
     }
 
-    public void jmp(String label) {
-        write("jmp " + label);
+    public void jmp(int label) {
+        write("jmp\tlabel" + label);
     }
 
-    public void jz(String label) {
-        write("jz " + label);
+    public void jz(int label) {
+        write("jz\tlabel" + label);
+    }
+
+    public void jnz(int label) {
+        write("jnz\tlabel" + label);
+    }
+
+    public int getLabel() {
+        return labelCounter++;
     }
 
     public String getSuffix(Type type) {
@@ -229,10 +236,7 @@ public class CodeGeneration {
         if (type instanceof RealType) {
             return "f";
         }
-        if (type instanceof IntType) {
-            return "i";
-        }
-        return "";
+        return "i";
     }
 
     private void write(String text) {

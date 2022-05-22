@@ -19,7 +19,7 @@ public class StructField extends AbstractASTNode {
 
     @Override
     public String toString() {
-        return name + ":" + type;
+        return "(" + name + " x " + type + ")";
     }
 
     public String getName() {

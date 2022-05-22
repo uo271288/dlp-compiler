@@ -10,7 +10,7 @@ import es.uniovi.dlp.ast.expressions.*;
 }
 
 program returns [Program ast]
-        : vars+=varDef* functions+=funcDef* mainFunc EOF
+        : (vars+=varDef | functions+=funcDef)* mainFunc EOF
         {
             List<Definition> def = new ArrayList<Definition>();
             for(var v : $vars) {

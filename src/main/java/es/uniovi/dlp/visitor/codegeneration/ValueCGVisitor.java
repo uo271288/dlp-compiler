@@ -1,5 +1,6 @@
 package es.uniovi.dlp.visitor.codegeneration;
 
+import es.uniovi.dlp.ast.Expression;
 import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.ast.expressions.*;
 import es.uniovi.dlp.visitor.AbstractVisitor;
@@ -9,14 +10,12 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
     private CodeGeneration cg;
     private AddressCGVisitor addressCGV;
 
-    ValueCGVisitor(CodeGeneration cg, AddressCGVisitor addressCGV) {
+    ValueCGVisitor(CodeGeneration cg) {
         this.cg = cg;
-        addressCGV.setValueCGV(this);
-        this.addressCGV = addressCGV;
     }
 
-    public AddressCGVisitor getAddressCGV() {
-        return addressCGV;
+    public void setAddressCGV(AddressCGVisitor addressCGV) {
+        this.addressCGV = addressCGV;
     }
 
     @Override
@@ -45,7 +44,7 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
 
     @Override
     public Type visit(RealLiteral doubleLiteral, Type param) {
-        cg.push(doubleLiteral.getValue());
+        cg.push(doubleLiteral.getType(), doubleLiteral.getValue());
         return null;
     }
 
@@ -105,6 +104,14 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
         fieldAccess.accept(addressCGV, param);
         cg.promoteTo(fieldAccess.getExpression().getType(), fieldAccess.getType());
         cg.load(fieldAccess.getType());
+        return null;
+    }
+
+    @Override
+    public Type visit(FunctionInvocation functionInvocation, Type param) {
+        for (Expression expression: functionInvocation.getArgs())
+            expression.accept(this, null);
+        cg.call(functionInvocation.getVariable().getName());
         return null;
     }
 }
