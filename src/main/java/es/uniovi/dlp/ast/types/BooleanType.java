@@ -3,25 +3,25 @@ package es.uniovi.dlp.ast.types;
 import es.uniovi.dlp.ast.Type;
 import es.uniovi.dlp.visitor.Visitor;
 
-public class IntType extends AbstractType {
+public class BooleanType extends AbstractType {
+    private static BooleanType instance;
 
-    private static IntType instance;
-
-    private IntType() {
+    private BooleanType() {
 
         super(0, 0);
     }
 
-    public static IntType getInstance() {
+    public static BooleanType getInstance() {
         if (instance == null)
-            instance = new IntType();
+            instance = new BooleanType();
         return instance;
     }
 
     @Override
     public String getTypeExpression() {
-        return "int";
+        return "boolean";
     }
+
 
     @Override
     public <ReturnType, ParamType> ReturnType accept(Visitor<ReturnType, ParamType> visitor, ParamType param) {
@@ -29,21 +29,8 @@ public class IntType extends AbstractType {
     }
 
     @Override
-    public boolean isArithmetic() {
-        return true;
-    }
-
-
-    @Override
-    public Type arithmetic(Type type) {
-        if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
-            return type;
-        return super.arithmetic(type);
-    }
-
-    @Override
     public Type comparison(Type type) {
-        if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
+        if (type instanceof BooleanType)
             return BooleanType.getInstance();
         return super.comparison(type);
     }
@@ -57,15 +44,24 @@ public class IntType extends AbstractType {
 
     @Override
     public boolean promotableTo(Type to) {
-        return (to instanceof FunctionType && ((FunctionType) to).getReturnType() instanceof IntType)
-                || to instanceof IntType;
+        return to instanceof BooleanType || super.promotableTo(to);
     }
 
     @Override
     public Type assignment(Type type) {
-        if (type instanceof IntType)
+        if (type instanceof BooleanType)
             return type;
-        return super.assignment(type);
+        return null;
+    }
+
+    @Override
+    public boolean isLogical() {
+        return true;
+    }
+
+    @Override
+    public Type logical(Type type) {
+        return type instanceof BooleanType ? type : super.logical(type);
     }
 
     @Override

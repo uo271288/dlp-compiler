@@ -43,7 +43,7 @@ public class RealType extends AbstractType {
     @Override
     public Type comparison(Type type) {
         if (type instanceof IntType || type instanceof CharType || type instanceof RealType)
-            return IntType.getInstance();
+            return BooleanType.getInstance();
         return super.comparison(type);
     }
 

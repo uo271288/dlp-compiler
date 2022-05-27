@@ -1,0 +1,24 @@
+def g(a::boolean)::boolean do
+    return 3 # Error
+end
+
+def main() do
+    b1::boolean
+    a::int
+
+    g(3) # Error
+    a=g(true) # Error
+    a=true # Error
+    b1=1 # Error
+    b1=1&&true # Error
+    b1=!a # Error
+    b1=3>b1 # Error
+    a=3>2 # Error
+    b1=true>false # Error
+    while(1) do # Error
+        puts 1
+    end
+    if(0) do # Error
+        puts 0
+    end
+end

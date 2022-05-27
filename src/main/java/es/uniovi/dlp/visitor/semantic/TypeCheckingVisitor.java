@@ -58,7 +58,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
         super.visit(unaryMinus, param);
         if (!unaryMinus.getExpression().getType().isArithmetic()) {
             ErrorManager.getInstance().addError(new Error(new Location(unaryMinus.getLine(), unaryMinus.getColumn()), ErrorReason.INVALID_ARITHMETIC));
-            unaryMinus.setType( ErrorType.getInstance());
+            unaryMinus.setType(ErrorType.getInstance());
         }
         unaryMinus.setType(IntType.getInstance());
         return null;
@@ -71,7 +71,7 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
             ErrorManager.getInstance().addError(new Error(new Location(not.getLine(), not.getColumn()), ErrorReason.NOT_LOGICAL));
             not.setType(ErrorType.getInstance());
         }
-        not.setType(IntType.getInstance());
+        not.setType(BooleanType.getInstance());
         return null;
     }
 
@@ -116,14 +116,21 @@ public class TypeCheckingVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(RealLiteral realLiteral, Type param) {
         super.visit(realLiteral, param);
-        realLiteral.setType( RealType.getInstance());
+        realLiteral.setType(RealType.getInstance());
         return null;
     }
 
     @Override
     public Type visit(CharLiteral charLiteral, Type param) {
         super.visit(charLiteral, param);
-        charLiteral.setType( CharType.getInstance());
+        charLiteral.setType(CharType.getInstance());
+        return null;
+    }
+
+    @Override
+    public Type visit(BooleanLiteral booleanLiteral, Type param) {
+        super.visit(booleanLiteral, param);
+        booleanLiteral.setType(BooleanType.getInstance());
         return null;
     }
 

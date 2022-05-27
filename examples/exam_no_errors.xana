@@ -1,0 +1,32 @@
+def f(a::boolean, b::boolean, c::boolean)::boolean do
+    return (a && b) || !c
+end
+
+def main() do
+    b1, b2, b3::boolean
+    a::int
+    puts f(true, false, false), '\n'
+    puts f(true, false, true), '\n'
+    puts f(false, true, true), '\n'
+    puts f(false, false, false), '\n'
+
+    b1 = true
+    b2 = 3 > 1
+    b3 = 4.5 <= 4.2
+    puts b1, '\n'
+    puts b2, '\n'
+    puts b3, '\n'
+
+    if(b1) do
+        puts 'Y', '\n'
+    else
+        puts 'N', '\n'
+    end
+
+    a = 0
+
+    while a < 10 do
+        puts a, '\n'
+        a = a+1
+    end
+end

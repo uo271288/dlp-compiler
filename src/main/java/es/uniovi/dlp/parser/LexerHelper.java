@@ -20,7 +20,7 @@ public class LexerHelper {
     }
 
     public static char lexemeToChar(String lexeme) {
-        if(lexeme.charAt(1)=='\\'){
+        if (lexeme.charAt(1) == '\\') {
             switch (lexeme.charAt(2)) {
                 case 't':
                     return '\t';
@@ -29,9 +29,17 @@ public class LexerHelper {
                 case 'n':
                     return '\n';
             }
-            return (char) Integer.parseInt(lexeme.substring(2,lexeme.length()-1));
-        }
-        else
+            return (char) Integer.parseInt(lexeme.substring(2, lexeme.length() - 1));
+        } else
             return lexeme.charAt(1);
+    }
+
+    public static int lexemeToBoolean(String lexeme) {
+        try {
+            return Boolean.parseBoolean(lexeme) ? 1 : 0;
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+        }
+        return -1;
     }
 }

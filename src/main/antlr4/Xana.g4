@@ -68,6 +68,7 @@ simpleType returns [Type ast]
         : 'int' {$ast = IntType.getInstance();}
         |'double' {$ast = RealType.getInstance();}
         |'char' {$ast = CharType.getInstance();}
+        |'boolean' {$ast = BooleanType.getInstance();}
         ;
 
 funcDef returns [FunctionDefinition ast]
@@ -185,6 +186,7 @@ expr returns [Expression ast] locals[List<Expression> list = new ArrayList<Expre
         : INT_CONSTANT {$ast = new IntLiteral(LexerHelper.lexemeToInt($INT_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | REAL_CONSTANT {$ast = new RealLiteral(LexerHelper.lexemeToReal($REAL_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | CHAR_CONSTANT {$ast = new CharLiteral(LexerHelper.lexemeToChar($CHAR_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
+        | BOOLEAN_CONSTANT {$ast = new BooleanLiteral(LexerHelper.lexemeToBoolean($BOOLEAN_CONSTANT.text), $start.getLine(), $start.getCharPositionInLine()+1);}
         | ID {$ast = new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1);}
         | ID '(' (exprs {$list.addAll($exprs.astList);})? ')'{$ast = new FunctionInvocation(new Variable($ID.text, $start.getLine(), $start.getCharPositionInLine()+1), $list, $start.getLine(), $start.getCharPositionInLine()+1);}
         | '(' expr ')' {$ast = $expr.ast;}
@@ -219,6 +221,9 @@ CHAR_CONSTANT
         : '\''.'\''
         | '\'\\'(INT_CONSTANT | [ntr])'\''
         ;
+
+
+BOOLEAN_CONSTANT: 'true'| 'false';
 ID: [a-zA-Z_] [a-zA-Z0-9_]* ;
 
 // Comments

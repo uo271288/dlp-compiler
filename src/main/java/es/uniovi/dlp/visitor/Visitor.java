@@ -22,6 +22,7 @@ public interface Visitor<ReturnType, ParamType> {
 
     ReturnType visit(Arithmetic arithmetic, ParamType param);
     ReturnType visit(ArrayAccess arrayAccess, ParamType param);
+    ReturnType visit(BooleanLiteral booleanLiteral, ParamType param);
     ReturnType visit(Cast cast, ParamType param);
     ReturnType visit(Comparison comparison, ParamType param);
     ReturnType visit(FieldAccess fieldAccess, ParamType param);
@@ -36,6 +37,7 @@ public interface Visitor<ReturnType, ParamType> {
     ReturnType visit(RealLiteral realLiteral, ParamType param);
 
     ReturnType visit(ArrayType arrayType, ParamType param);
+    ReturnType visit(BooleanType booleanType, ParamType param);
     ReturnType visit(CharType charType, ParamType param);
     ReturnType visit(FunctionType functionType, ParamType param);
     ReturnType visit(IntType intType, ParamType param);

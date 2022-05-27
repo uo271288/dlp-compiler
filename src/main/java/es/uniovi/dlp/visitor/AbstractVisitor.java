@@ -86,6 +86,11 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
     }
 
     @Override
+    public ReturnType visit(BooleanLiteral booleanLiteral, ParamType param) {
+        return null;
+    }
+
+    @Override
     public ReturnType visit(Cast cast, ParamType param) {
         cast.getCastType().accept(this, param);
         cast.getExpression().accept(this, param);
@@ -136,6 +141,7 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
         return null;
     }
 
+
     @Override
     public ReturnType visit(CharLiteral charLiteral, ParamType param) {
         return null;
@@ -154,6 +160,11 @@ public abstract class AbstractVisitor<ReturnType, ParamType> implements Visitor<
     @Override
     public ReturnType visit(ArrayType arrayType, ParamType param) {
         arrayType.getType().accept(this, param);
+        return null;
+    }
+
+    @Override
+    public ReturnType visit(BooleanType booleanType, ParamType param) {
         return null;
     }
 

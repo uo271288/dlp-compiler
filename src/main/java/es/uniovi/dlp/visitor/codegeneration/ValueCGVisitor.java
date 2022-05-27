@@ -54,13 +54,19 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
         return null;
     }
 
+
+
     @Override
     public Type visit(UnaryMinus unaryMinus, Type param) {
         super.visit(unaryMinus, param);
         cg.arithmetic("-", unaryMinus.getType());
         return null;
     }
-
+    @Override
+    public Type visit(BooleanLiteral booleanLiteral, Type param) {
+        cg.push(booleanLiteral.getType(), booleanLiteral.getValue());
+        return null;
+    }
     @Override
     public Type visit(Not not, Type param) {
         super.visit(not, param);
@@ -71,7 +77,7 @@ public class ValueCGVisitor extends AbstractVisitor<Type, Type> {
     @Override
     public Type visit(Comparison comparison, Type param) {
         super.visit(comparison, param);
-        cg.comparison(comparison.getOperator(), comparison.getType());
+        cg.comparison(comparison.getOperator(), comparison.getOperand1().getType());
         return null;
     }
 
